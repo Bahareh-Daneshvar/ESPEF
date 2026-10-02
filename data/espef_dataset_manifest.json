@@ -1,0 +1,165 @@
+{
+  "project": "ESPEF",
+  "storage": "year-partitioned Parquet only; no monolithic corpus",
+  "endpoint": "https://api.openalex.org/works",
+  "corpus": "core",
+  "primary_subfield_id": "1702",
+  "language": "en",
+  "work_types": [
+    "article",
+    "conference-paper",
+    "preprint"
+  ],
+  "citation_filter": null,
+  "configuration_sha256": "2222aae96d468b67e6e89b64d2e71fedf5b099b8e12d35f15c476fb500f8059f",
+  "quality_policy": {
+    "require_nonempty_title": true,
+    "require_reconstructable_abstract": true,
+    "require_valid_date_in_partition": true,
+    "reject_exact_metadata_placeholders": [
+      "International audience",
+      "No abstract available",
+      "Abstract not available",
+      "Not available",
+      "N/A"
+    ],
+    "reject_numeric_only_abstract": true,
+    "minimum_abstract_word_count": null,
+    "suspected_text_language_mismatch": "flag_for_review_without_changing_the_OpenAlex_en_rule"
+  },
+  "abstract_reconstruction": "unique nonnegative integer positions; contiguous from zero; join in position order",
+  "publication_date_definition": "OpenAlex publication_date unchanged; annual storage does not redefine temporal chunks",
+  "years": {
+    "2021": {
+      "status": "validated",
+      "date_range": [
+        "2021-01-01",
+        "2021-12-31"
+      ],
+      "initial_matching_count": 136446,
+      "retrieved": 136446,
+      "usable": 106415,
+      "files": {
+        "raw": {
+          "path": "data/raw/openalex_espef_2021.parquet",
+          "size_bytes": 115990985,
+          "sha256": "09b069a6912c2a9a534b2ba926a88a235c9c3e460f06408cc4b841a3b0ec8093",
+          "rows": 136446
+        },
+        "processed": {
+          "path": "data/processed/espef_corpus_2021.parquet",
+          "size_bytes": 51337148,
+          "sha256": "90d8fefc610b65869fa1ce11e787bed1334c480cbd7b7db13112b773578945d7",
+          "rows": 106415
+        }
+      },
+      "audit_path": "data/audits/espef_audit_2021.json",
+      "audit_sha256": "2ec786faa6d9c1e07aff0117f6ca3f514217dbfa7d632c145b92aed31748c4c7",
+      "coverage_status": "coverage_and_date_QC_flags_require_review",
+      "modelling_approved": false,
+      "full_audit_path": "data/audits/espef_audit_2021_full.json.gz",
+      "full_audit_sha256": "c8f7dcf911dd1e323fd1fece7135df407afe85b671ac04689f057ebb44aaae93",
+      "full_audit_uncompressed_sha256": "faf4e947a6d56008835f95ee5cf5182b9a011c7d38fd8b4ed8cf3bd27cf18ec7"
+    },
+    "2022": {
+      "status": "checkpointed_incomplete",
+      "date_range": [
+        "2022-01-01",
+        "2022-12-31"
+      ],
+      "initial_matching_count": 136491,
+      "retrieved": 62600,
+      "checkpoints": [
+        {
+          "quarter": "Q1",
+          "initial_matching_count": 46805,
+          "retrieved": 17400,
+          "pages": 87,
+          "complete": false,
+          "path": "data/checkpoints/2022/Q1/state.json"
+        },
+        {
+          "quarter": "Q2",
+          "initial_matching_count": 28800,
+          "retrieved": 15200,
+          "pages": 76,
+          "complete": false,
+          "path": "data/checkpoints/2022/Q2/state.json"
+        },
+        {
+          "quarter": "Q3",
+          "initial_matching_count": 27512,
+          "retrieved": 15000,
+          "pages": 75,
+          "complete": false,
+          "path": "data/checkpoints/2022/Q3/state.json"
+        },
+        {
+          "quarter": "Q4",
+          "initial_matching_count": 33374,
+          "retrieved": 15000,
+          "pages": 75,
+          "complete": false,
+          "path": "data/checkpoints/2022/Q4/state.json"
+        }
+      ],
+      "coverage_status": "not_audited",
+      "modelling_approved": false
+    },
+    "2023": {
+      "status": "not_started",
+      "date_range": [
+        "2023-01-01",
+        "2023-12-31"
+      ],
+      "initial_matching_count": null,
+      "retrieved": 0,
+      "checkpoints": [],
+      "coverage_status": "not_audited",
+      "modelling_approved": false
+    },
+    "2024": {
+      "status": "not_started",
+      "date_range": [
+        "2024-01-01",
+        "2024-12-31"
+      ],
+      "initial_matching_count": null,
+      "retrieved": 0,
+      "checkpoints": [],
+      "coverage_status": "not_audited",
+      "modelling_approved": false
+    },
+    "2025": {
+      "status": "not_started",
+      "date_range": [
+        "2025-01-01",
+        "2025-12-31"
+      ],
+      "initial_matching_count": null,
+      "retrieved": 0,
+      "checkpoints": [],
+      "coverage_status": "not_audited",
+      "modelling_approved": false
+    },
+    "2026": {
+      "status": "not_started",
+      "date_range": [
+        "2026-01-01",
+        "2026-09-30"
+      ],
+      "initial_matching_count": null,
+      "retrieved": 0,
+      "checkpoints": [],
+      "coverage_status": "pending_stage_1B",
+      "modelling_approved": false
+    }
+  },
+  "updated_at": "2026-10-01T23:43:41.372660+00:00",
+  "blocked_reason": "OpenAlex rate or daily usage limit (HTTP 429); checkpoint retained",
+  "all_years_validated": false,
+  "modelling_approved": false,
+  "completeness_2026": "pending_stage_1B",
+  "credentials": "environment only; never embedded",
+  "full_data_location": "Distributed separately to project owner; no public dataset archive/DOI has been assigned."
+}

@@ -1,0 +1,10 @@
+API: https://api.openalex.org/works
+corpus=core
+Raw: all matching metadata, before text QC; citations neither requested nor used.
+2021: primary_topic.subfield.id:1702,from_publication_date:2021-01-01,to_publication_date:2021-12-31,language:en,type:article|conference-paper|preprint
+2022: primary_topic.subfield.id:1702,from_publication_date:2022-01-01,to_publication_date:2022-12-31,language:en,type:article|conference-paper|preprint
+2023: primary_topic.subfield.id:1702,from_publication_date:2023-01-01,to_publication_date:2023-12-31,language:en,type:article|conference-paper|preprint
+2024: primary_topic.subfield.id:1702,from_publication_date:2024-01-01,to_publication_date:2024-12-31,language:en,type:article|conference-paper|preprint
+2025: primary_topic.subfield.id:1702,from_publication_date:2025-01-01,to_publication_date:2025-12-31,language:en,type:article|conference-paper|preprint
+2026: primary_topic.subfield.id:1702,from_publication_date:2026-01-01,to_publication_date:2026-09-30,language:en,type:article|conference-paper|preprint
+Per-year quarter subdivision is solely for cursor checkpointing/concurrency; no added restriction.

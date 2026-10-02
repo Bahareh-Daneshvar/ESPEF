@@ -1,0 +1,6 @@
+data/raw/*.parquet
+data/processed/*.parquet
+data/checkpoints/
+*.tmp
+__pycache__/
+.env

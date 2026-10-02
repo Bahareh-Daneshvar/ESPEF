@@ -1,0 +1,76 @@
+{
+  "endpoint": "https://api.openalex.org/works",
+  "corpus": "core",
+  "primary_subfield_id": "1702",
+  "language": "en",
+  "work_types": [
+    "article",
+    "conference-paper",
+    "preprint"
+  ],
+  "years": {
+    "2021": [
+      "2021-01-01",
+      "2021-12-31"
+    ],
+    "2022": [
+      "2022-01-01",
+      "2022-12-31"
+    ],
+    "2023": [
+      "2023-01-01",
+      "2023-12-31"
+    ],
+    "2024": [
+      "2024-01-01",
+      "2024-12-31"
+    ],
+    "2025": [
+      "2025-01-01",
+      "2025-12-31"
+    ],
+    "2026": [
+      "2026-01-01",
+      "2026-09-30"
+    ]
+  },
+  "per_page": 200,
+  "max_requests_per_run": 10000,
+  "quarter_workers": 4,
+  "max_retries": 5,
+  "fields": [
+    "id",
+    "doi",
+    "title",
+    "abstract_inverted_index",
+    "publication_date",
+    "publication_year",
+    "type",
+    "language",
+    "primary_topic",
+    "topics",
+    "primary_location",
+    "locations",
+    "created_date",
+    "updated_date"
+  ],
+  "compression": "zstd",
+  "citations_used": false,
+  "quality_policy": {
+    "require_nonempty_title": true,
+    "require_reconstructable_abstract": true,
+    "require_valid_date_in_partition": true,
+    "reject_exact_metadata_placeholders": [
+      "International audience",
+      "No abstract available",
+      "Abstract not available",
+      "Not available",
+      "N/A"
+    ],
+    "reject_numeric_only_abstract": true,
+    "minimum_abstract_word_count": null,
+    "suspected_text_language_mismatch": "flag_for_review_without_changing_the_OpenAlex_en_rule"
+  },
+  "modelling_approved": false,
+  "completeness_2026": "pending_stage_1B"
+}

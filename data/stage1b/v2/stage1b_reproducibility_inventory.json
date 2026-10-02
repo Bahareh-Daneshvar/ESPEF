@@ -1,0 +1,165 @@
+{
+  "inventory": "ESPEF Stage 1B derived-output reproducibility inventory",
+  "output_version": "v2",
+  "release_integrity_evidence": {
+    "release_tag": "espef-yearly-2026-10-02",
+    "checked_at_utc": "2026-10-02T23:39:38.315119+00:00",
+    "metadata_api_url": "https://api.github.com/repos/Bahareh-Daneshvar/ESPEF/releases/tags/espef-yearly-2026-10-02",
+    "manifest_asset": {
+      "name": "espef_dataset_manifest.json",
+      "sha256": "8ead21c5012ddf67b0f7f11365450c1ac019a2c956141cc56da13ebc906e720a",
+      "size_bytes": 7592
+    },
+    "sha256sums_asset": {
+      "name": "SHA256SUMS",
+      "sha256": "aeefca2a95ef15d1fea344548f24b682dfe3324ad60a994ad0aed82d8031cb6f",
+      "size_bytes": 3807
+    },
+    "dataset_assets_checked": 12,
+    "dataset_assets": [
+      {
+        "name": "openalex_espef_2021.parquet",
+        "sha256": "09b069a6912c2a9a534b2ba926a88a235c9c3e460f06408cc4b841a3b0ec8093",
+        "size_bytes": 115990985,
+        "manifest_match": true,
+        "sha256sums_match": true,
+        "release_metadata_match": true
+      },
+      {
+        "name": "espef_corpus_2021.parquet",
+        "sha256": "90d8fefc610b65869fa1ce11e787bed1334c480cbd7b7db13112b773578945d7",
+        "size_bytes": 51337148,
+        "manifest_match": true,
+        "sha256sums_match": true,
+        "release_metadata_match": true
+      },
+      {
+        "name": "openalex_espef_2022.parquet",
+        "sha256": "9e096db240d1ec1b6e96c537aa32bd92053d718f7f0f8107685c589ca1c102fb",
+        "size_bytes": 120560088,
+        "manifest_match": true,
+        "sha256sums_match": true,
+        "release_metadata_match": true
+      },
+      {
+        "name": "espef_corpus_2022.parquet",
+        "sha256": "7253e4cdb99ddcacfa67fee6100bf6eba98a68878703269b5f5e12ec6df88633",
+        "size_bytes": 54875951,
+        "manifest_match": true,
+        "sha256sums_match": true,
+        "release_metadata_match": true
+      },
+      {
+        "name": "openalex_espef_2023.parquet",
+        "sha256": "e1f11a244717319a037ef1c36815bd0cb727c26e097d0b1ee1717915551fec42",
+        "size_bytes": 144173131,
+        "manifest_match": true,
+        "sha256sums_match": true,
+        "release_metadata_match": true
+      },
+      {
+        "name": "espef_corpus_2023.parquet",
+        "sha256": "960e6e731faeb3483450fcfb2401f6da4b0e8f9a074970fbef3ee86beb3815a4",
+        "size_bytes": 66511527,
+        "manifest_match": true,
+        "sha256sums_match": true,
+        "release_metadata_match": true
+      },
+      {
+        "name": "openalex_espef_2024.parquet",
+        "sha256": "253c0dae495660d82b40d5984efafd57fb39365071997212f2ac1323e4aca15e",
+        "size_bytes": 168777263,
+        "manifest_match": true,
+        "sha256sums_match": true,
+        "release_metadata_match": true
+      },
+      {
+        "name": "espef_corpus_2024.parquet",
+        "sha256": "d771c3526008baa32c53ebd2eef7e63eff32ea29be7c9e78f910e50730ddfc4b",
+        "size_bytes": 79171293,
+        "manifest_match": true,
+        "sha256sums_match": true,
+        "release_metadata_match": true
+      },
+      {
+        "name": "openalex_espef_2025.parquet",
+        "sha256": "5e8df879490ef7f2fa1917247d05084d521e10e5589bc9f0044f3791e9c4867a",
+        "size_bytes": 157750328,
+        "manifest_match": true,
+        "sha256sums_match": true,
+        "release_metadata_match": true
+      },
+      {
+        "name": "espef_corpus_2025.parquet",
+        "sha256": "bb7264d067a11a0aded2796979c6968d5d3e2c1126ba2b40cebe835b2309a157",
+        "size_bytes": 73429380,
+        "manifest_match": true,
+        "sha256sums_match": true,
+        "release_metadata_match": true
+      },
+      {
+        "name": "openalex_espef_2026.parquet",
+        "sha256": "40b5a584a6f6805864de68eb190a07af35e42d93b8573ee875b2f55d6a751347",
+        "size_bytes": 87007157,
+        "manifest_match": true,
+        "sha256sums_match": true,
+        "release_metadata_match": true
+      },
+      {
+        "name": "espef_corpus_2026.parquet",
+        "sha256": "4f138a7082a06f45afda4dabcef6285895f0070c92eedbaa659f3ff0a9706cb2",
+        "size_bytes": 38523416,
+        "manifest_match": true,
+        "sha256sums_match": true,
+        "release_metadata_match": true
+      }
+    ]
+  },
+  "source_integrity_manifest": {
+    "path": "data/stage1b/v2/stage1b_modelling_manifest.json",
+    "sha256": "8726ec2bd23c36b344d50a0a9ff3d9af91a35a914c7607738553302939b78c78",
+    "source_files_unchanged": true
+  },
+  "frozen_dataset_manifest": {
+    "path": "data/espef_dataset_manifest.json",
+    "sha256": "8ead21c5012ddf67b0f7f11365450c1ac019a2c956141cc56da13ebc906e720a"
+  },
+  "files": [
+    {
+      "path": "data/stage1b/v2/stage1b_quarterly_qc.csv",
+      "sha256": "0d16ba3ad7dcd1aae85a51e9aa288f7596b920449068108e50b38c8bfe7049e5",
+      "size_bytes": 15934
+    },
+    {
+      "path": "data/stage1b/v2/stage1b_modelling_cohorts.parquet",
+      "sha256": "7f84a74348d5e3cc09f6f2be732ce026e62b611563d947ac7556c6e8470dbbee",
+      "size_bytes": 4714556
+    },
+    {
+      "path": "data/stage1b/v2/stage1b_modelling_manifest.json",
+      "sha256": "8726ec2bd23c36b344d50a0a9ff3d9af91a35a914c7607738553302939b78c78",
+      "size_bytes": 22222
+    },
+    {
+      "path": "data/stage1b/v2/ESPEF_Stage1B_Audit.md",
+      "sha256": "3cb41c1068fd7ac61e798a3e792ec120517cb24fdf35b706b06a623228b4e6f0",
+      "size_bytes": 6761
+    },
+    {
+      "path": "scripts/stage1b_audit.py",
+      "sha256": "aacff1cda20ca59ded85e306291baec0973c7a138b83ffdfc1d3170f299504a9",
+      "size_bytes": 46144
+    },
+    {
+      "path": "scripts/load_stage1b_modelling.py",
+      "sha256": "6b31e60ac0290b216c0217c9763a9cdd9656917ad122b49d5afe26caefb5eef9",
+      "size_bytes": 2744
+    },
+    {
+      "path": "tests/test_stage1b_audit.py",
+      "sha256": "2492ebd900cd7836b55d4424c35b87e1ec6cc3df109bd8b31d3f2ab150e8264e",
+      "size_bytes": 3884
+    }
+  ],
+  "self_hash": "omitted to avoid a self-referential checksum"
+}

@@ -1,6 +1,7 @@
 """Lazy, metadata-free projection for approved Stage 1B primary cohorts."""
 from __future__ import annotations
 
+import json
 import pathlib
 from collections.abc import Iterator
 
@@ -9,7 +10,10 @@ import pyarrow.parquet as pq
 
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-COHORT_PATH = ROOT / "data" / "stage1b" / "stage1b_modelling_cohorts.parquet"
+OUTPUT_VERSION = "v2"
+VERSION_DIR = ROOT / "data" / "stage1b" / OUTPUT_VERSION
+MANIFEST_PATH = VERSION_DIR / "stage1b_modelling_manifest.json"
+COHORT_PATH = VERSION_DIR / "stage1b_modelling_cohorts.parquet"
 MODEL_COLUMNS = ["openalex_id", "title", "abstract", "publication_date"]
 COHORT_COLUMN = {
     "P0": "cohort_p0",
@@ -38,6 +42,10 @@ def iter_modelling_batches(
         raise ValueError("batch_size must be positive")
     if not COHORT_PATH.is_file():
         raise FileNotFoundError(f"cohort membership manifest is missing: {COHORT_PATH}")
+    manifest = json.loads(MANIFEST_PATH.read_text())
+    recorded_cohort_path = manifest["outputs"]["cohort_membership"]["path"]
+    if manifest.get("output_version") != OUTPUT_VERSION or (ROOT / recorded_cohort_path).resolve() != COHORT_PATH.resolve():
+        raise RuntimeError("loader and Stage 1B cohort manifest versions do not match")
 
     selected_ids = set()
     cohort_column = COHORT_COLUMN[cohort]

@@ -9,12 +9,15 @@ import json
 import os
 import pathlib
 import tempfile
+import urllib.request
 
 import pyarrow as pa
 import pyarrow.parquet as pq
 
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
+RELEASE_TAG = "espef-yearly-2026-10-02"
+OUTPUT_VERSION = "v2"
 YEARS = tuple(range(2021, 2027))
 PRIMARY_YEARS = tuple(range(2021, 2026))
 REPORT_QUARTERS = tuple(
@@ -97,6 +100,82 @@ def source_integrity(manifest: dict) -> dict[str, dict]:
                 "sha256": actual_hash,
             }
     return result
+
+
+def fetch_release_bytes(url: str) -> bytes:
+    request = urllib.request.Request(url, headers={"User-Agent": "ESPEF-Stage1B-audit"})
+    with urllib.request.urlopen(request, timeout=30) as response:
+        return response.read()
+
+
+def verify_release_integrity(manifest: dict) -> dict:
+    """Verify frozen manifest and checksum contents against current release metadata."""
+    release_url = f"https://api.github.com/repos/Bahareh-Daneshvar/ESPEF/releases/tags/{RELEASE_TAG}"
+    release = json.loads(fetch_release_bytes(release_url))
+    if release.get("tag_name") != RELEASE_TAG:
+        raise RuntimeError("GitHub release tag does not match the frozen dataset release")
+    assets = {asset["name"]: asset for asset in release.get("assets", [])}
+    for required in ("espef_dataset_manifest.json", "SHA256SUMS"):
+        if required not in assets:
+            raise RuntimeError(f"required release integrity asset is missing: {required}")
+
+    manifest_asset = assets["espef_dataset_manifest.json"]
+    sums_asset = assets["SHA256SUMS"]
+    manifest_bytes = fetch_release_bytes(manifest_asset["browser_download_url"])
+    sums_bytes = fetch_release_bytes(sums_asset["browser_download_url"])
+    manifest_hash = hashlib.sha256(manifest_bytes).hexdigest()
+    sums_hash = hashlib.sha256(sums_bytes).hexdigest()
+    for name, asset, content, actual_hash in (
+        ("espef_dataset_manifest.json", manifest_asset, manifest_bytes, manifest_hash),
+        ("SHA256SUMS", sums_asset, sums_bytes, sums_hash),
+    ):
+        if asset.get("digest") != f"sha256:{actual_hash}" or asset.get("size") != len(content):
+            raise RuntimeError(f"release metadata does not verify integrity asset {name}")
+
+    released_manifest = json.loads(manifest_bytes)
+    sum_entries = {}
+    for line in sums_bytes.decode("ascii").splitlines():
+        parts = line.split()
+        if len(parts) == 2:
+            sum_entries[pathlib.Path(parts[1]).name] = parts[0]
+
+    checked_assets = []
+    for year in YEARS:
+        local_year = manifest["years"][str(year)]
+        release_year = released_manifest.get("years", {}).get(str(year), {})
+        for kind in ("raw", "processed"):
+            expected = local_year["files"][kind]
+            released = release_year.get("files", {}).get(kind, {})
+            filename = pathlib.Path(expected["path"]).name
+            if any(released.get(key) != expected.get(key) for key in ("path", "size_bytes", "sha256", "rows")):
+                raise RuntimeError(f"frozen and release manifests disagree for {filename}")
+            asset = assets.get(filename)
+            if not asset:
+                raise RuntimeError(f"yearly dataset is missing from release metadata: {filename}")
+            if sum_entries.get(filename) != expected["sha256"]:
+                raise RuntimeError(f"SHA256SUMS disagrees with the frozen manifest for {filename}")
+            if asset.get("digest") != f"sha256:{expected['sha256']}" or asset.get("size") != expected["size_bytes"]:
+                raise RuntimeError(f"GitHub release metadata disagrees for {filename}")
+            checked_assets.append(
+                {
+                    "name": filename,
+                    "sha256": expected["sha256"],
+                    "size_bytes": expected["size_bytes"],
+                    "manifest_match": True,
+                    "sha256sums_match": True,
+                    "release_metadata_match": True,
+                }
+            )
+
+    return {
+        "release_tag": RELEASE_TAG,
+        "checked_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
+        "metadata_api_url": release_url,
+        "manifest_asset": {"name": manifest_asset["name"], "sha256": manifest_hash, "size_bytes": len(manifest_bytes)},
+        "sha256sums_asset": {"name": sums_asset["name"], "sha256": sums_hash, "size_bytes": len(sums_bytes)},
+        "dataset_assets_checked": len(checked_assets),
+        "dataset_assets": checked_assets,
+    }
 
 
 def counter_from_audit(path: pathlib.Path, field: str) -> dict[str, int]:
@@ -278,6 +357,11 @@ def make_qc_rows(raw_counts: collections.Counter, usable_counts: collections.Cou
         n_raw = raw_counts[quarter]
         n_usable = current["n_usable"]
         known_denominator = sum(current["sources"].values())
+        type_total = sum(current["types"].values())
+        if known_denominator + current["missing_source"] != n_usable:
+            raise RuntimeError(f"known-source and missing-source counts do not sum to n_usable in {quarter}")
+        if type_total != n_usable:
+            raise RuntimeError(f"work-type counts do not sum to n_usable in {quarter}")
         role = "primary_candidate_2021_2025" if year in PRIMARY_YEARS else "pending_stage_1B_recent_censored_excluded"
         row = {
             "year": year,
@@ -339,8 +423,131 @@ def write_qc(path: pathlib.Path, rows: list[dict]) -> None:
         writer.writerows(rows)
 
 
-def build_report(qc_rows: list[dict], cohort_counts: dict) -> str:
+def temporal_assessment(qc_rows: list[dict], stats_by_quarter: dict) -> dict:
+    annual = {}
+    for year in YEARS:
+        year_rows = [row for row in qc_rows if row["year"] == year]
+        source_counts: collections.Counter = collections.Counter()
+        source_names = collections.defaultdict(collections.Counter)
+        type_counts: collections.Counter = collections.Counter()
+        for row in year_rows:
+            quarter = f"{year}{row['quarter']}"
+            current = stats_by_quarter[quarter]
+            source_counts.update(current["sources"])
+            type_counts.update(current["types"])
+            for source_id, names in current["source_names"].items():
+                source_names[source_id].update(names)
+        known_sources = sum(source_counts.values())
+        n_usable = sum(row["n_usable"] for row in year_rows)
+        january_count = sum(row["january_1_flag_count"] for row in year_rows)
+        q1_january_count = sum(row["january_1_flag_count"] for row in year_rows if row["quarter"] == "Q1")
+        missing_source = sum(row["missing_primary_source_count"] for row in year_rows)
+        top = sorted(source_counts.items(), key=lambda item: (-item[1], item[0]))[:3]
+        annual[year] = {
+            "n_raw": sum(row["n_raw"] for row in year_rows),
+            "n_usable": n_usable,
+            "january_1_count": january_count,
+            "january_1_rate_usable_denominator": rate(january_count, n_usable),
+            "january_1_count_in_q1": q1_january_count,
+            "missing_source_count": missing_source,
+            "missing_source_rate_usable_denominator": rate(missing_source, n_usable),
+            "work_types": {
+                work_type: {
+                    "count": type_counts[work_type],
+                    "proportion_usable_denominator": rate(type_counts[work_type], n_usable),
+                }
+                for work_type in ("article", "conference-paper", "preprint")
+            },
+            "known_source_denominator": known_sources,
+            "source_hhi_known_source_denominator": round(
+                sum((count / known_sources) ** 2 for count in source_counts.values()), 8
+            ) if known_sources else None,
+            "leading_sources": [
+                {
+                    "source_id": source_id,
+                    "source_name": sorted(source_names[source_id].items(), key=lambda item: (-item[1], item[0]))[0][0],
+                    "count": count,
+                    "share_known_source_denominator": rate(count, known_sources),
+                }
+                for source_id, count in top
+            ],
+        }
+
+    primary_rows = [row for row in qc_rows if row["year"] in PRIMARY_YEARS]
+    min_raw = min(primary_rows, key=lambda row: row["n_raw"])
+    max_raw = max(primary_rows, key=lambda row: row["n_raw"])
+    min_usable = min(primary_rows, key=lambda row: row["n_usable"])
+    max_usable = max(primary_rows, key=lambda row: row["n_usable"])
+    source_2021 = collections.Counter()
+    source_2025 = collections.Counter()
+    for quarter in REPORT_QUARTERS:
+        year = int(quarter[:4])
+        if year == 2021:
+            source_2021.update(stats_by_quarter[quarter]["sources"])
+        elif year == 2025:
+            source_2025.update(stats_by_quarter[quarter]["sources"])
+    den_2021 = sum(source_2021.values())
+    den_2025 = sum(source_2025.values())
+    shared_ids = set(source_2021) | set(source_2025)
+    source_tvd = 0.5 * sum(
+        abs(source_2021[source_id] / den_2021 - source_2025[source_id] / den_2025)
+        for source_id in shared_ids
+    )
+    primary_usable = sum(row["n_usable"] for row in primary_rows)
+    primary_january = sum(row["january_1_flag_count"] for row in primary_rows)
+    primary_january_q1 = sum(
+        row["january_1_flag_count"] for row in primary_rows if row["quarter"] == "Q1"
+    )
+    primary_missing_source = sum(row["missing_primary_source_count"] for row in primary_rows)
+    change_pp = {
+        work_type: round(
+            100 * (
+                annual[2025]["work_types"][work_type]["proportion_usable_denominator"]
+                - annual[2021]["work_types"][work_type]["proportion_usable_denominator"]
+            ),
+            2,
+        )
+        for work_type in ("article", "conference-paper", "preprint")
+    }
+    return {
+        "primary_quarter_size": {
+            "raw_min": {"quarter": f"{min_raw['year']}{min_raw['quarter']}", "count": min_raw["n_raw"]},
+            "raw_max": {"quarter": f"{max_raw['year']}{max_raw['quarter']}", "count": max_raw["n_raw"]},
+            "raw_max_min_ratio": round(max_raw["n_raw"] / min_raw["n_raw"], 4),
+            "usable_min": {"quarter": f"{min_usable['year']}{min_usable['quarter']}", "count": min_usable["n_usable"]},
+            "usable_max": {"quarter": f"{max_usable['year']}{max_usable['quarter']}", "count": max_usable["n_usable"]},
+            "usable_max_min_ratio": round(max_usable["n_usable"] / min_usable["n_usable"], 4),
+        },
+        "primary_summary": {
+            "n_usable": primary_usable,
+            "january_1_count": primary_january,
+            "january_1_rate_usable_denominator": rate(primary_january, primary_usable),
+            "january_1_count_in_q1": primary_january_q1,
+            "missing_source_count": primary_missing_source,
+            "missing_source_rate_usable_denominator": rate(primary_missing_source, primary_usable),
+        },
+        "source_distribution_2021_vs_2025": {
+            "metric": "total_variation_distance_over_known_primary_source_ids",
+            "value": round(source_tvd, 8),
+            "2021_source_hhi": annual[2021]["source_hhi_known_source_denominator"],
+            "2025_source_hhi": annual[2025]["source_hhi_known_source_denominator"],
+        },
+        "work_type_change_2021_to_2025_percentage_points": change_pp,
+        "annual": annual,
+        "annual_missing_source_rate_min": min(
+            annual[year]["missing_source_rate_usable_denominator"] for year in PRIMARY_YEARS
+        ),
+        "annual_missing_source_rate_max": max(
+            annual[year]["missing_source_rate_usable_denominator"] for year in PRIMARY_YEARS
+        ),
+    }
+
+
+def build_report(qc_rows: list[dict], cohort_counts: dict, assessment: dict) -> str:
     sums = collections.Counter()
+    recent_quarter_summary = ", ".join(
+        f"{row['quarter']} {row['n_usable']:,}" for row in qc_rows if row["year"] == 2026
+    )
     for row in qc_rows:
         if row["year"] in PRIMARY_YEARS:
             sums["p0"] += row["n_usable"]
@@ -355,6 +562,8 @@ def build_report(qc_rows: list[dict], cohort_counts: dict) -> str:
         "## Decision and scope",
         "",
         "2021–2025 are the proposed primary modelling period. P0 is the usable cleaned cohort; S1 and S2 are sensitivity cohorts, and S3-known is a positive-evidence diagnostic subset, not a preprint-free cohort. 2026 Q1–Q3 is reported separately as recent/censored, remains pending_stage_1B, and is excluded from all primary cohorts.",
+        "",
+        "This is a retrospective frozen OpenAlex snapshot ordered by stored publication_date, not a guaranteed reconstruction of first scholarly appearance.",
         "",
         "No frozen corpus, source Parquet, query, or scientific inclusion rule was changed. This audit does not run embeddings, clustering, topic modelling, drift detection, or emergence scoring.",
         "",
@@ -376,6 +585,23 @@ def build_report(qc_rows: list[dict], cohort_counts: dict) -> str:
         "- Known-source shares and HHI use records with nonempty primary_source_id as denominator; missing source IDs are separately counted/rated among usable records. HHI is the sum of squared shares over all known source IDs, not only the leading five. Source IDs are grouping keys and display names are labels.",
         "- Counts and rates in `stage1b_quarterly_qc.csv` cover all quarters 2021Q1–2025Q4 and 2026Q1–Q3. Rates are proportions from 0 to 1.",
         "",
+        "## Quantitative assessment",
+        "",
+        "### Observations",
+        "",
+        f"- Primary-period raw quarterly counts range from {assessment['primary_quarter_size']['raw_min']['count']:,} ({assessment['primary_quarter_size']['raw_min']['quarter']}) to {assessment['primary_quarter_size']['raw_max']['count']:,} ({assessment['primary_quarter_size']['raw_max']['quarter']}), a {assessment['primary_quarter_size']['raw_max_min_ratio']:.2f}× max/min ratio. Usable counts range from {assessment['primary_quarter_size']['usable_min']['count']:,} ({assessment['primary_quarter_size']['usable_min']['quarter']}) to {assessment['primary_quarter_size']['usable_max']['count']:,} ({assessment['primary_quarter_size']['usable_max']['quarter']}), a {assessment['primary_quarter_size']['usable_max_min_ratio']:.2f}× ratio.",
+        f"- From 2021 to 2025, article share changes from {100 * assessment['annual'][2021]['work_types']['article']['proportion_usable_denominator']:.2f}% to {100 * assessment['annual'][2025]['work_types']['article']['proportion_usable_denominator']:.2f}% ({assessment['work_type_change_2021_to_2025_percentage_points']['article']:+.2f} percentage points); conference-paper share changes {assessment['work_type_change_2021_to_2025_percentage_points']['conference-paper']:+.2f} points; preprint share changes {assessment['work_type_change_2021_to_2025_percentage_points']['preprint']:+.2f} points.",
+        f"- The 2021-to-2025 known-primary-source distributions have total-variation distance {assessment['source_distribution_2021_vs_2025']['value']:.4f}; annual known-source HHI changes from {assessment['source_distribution_2021_vs_2025']['2021_source_hhi']:.4f} to {assessment['source_distribution_2021_vs_2025']['2025_source_hhi']:.4f}. The leading source is {assessment['annual'][2021]['leading_sources'][0]['source_name']} in 2021 ({100 * assessment['annual'][2021]['leading_sources'][0]['share_known_source_denominator']:.2f}% of known-source records) and {assessment['annual'][2025]['leading_sources'][0]['source_name']} in 2025 ({100 * assessment['annual'][2025]['leading_sources'][0]['share_known_source_denominator']:.2f}%).",
+        f"- January-1 flags total {assessment['primary_summary']['january_1_count']:,} of {assessment['primary_summary']['n_usable']:,} P0 records ({100 * assessment['primary_summary']['january_1_rate_usable_denominator']:.2f}%); {assessment['primary_summary']['january_1_count_in_q1']:,} occur in Q1. Annual flag rates range from {100 * min(assessment['annual'][year]['january_1_rate_usable_denominator'] for year in PRIMARY_YEARS):.2f}% to {100 * max(assessment['annual'][year]['january_1_rate_usable_denominator'] for year in PRIMARY_YEARS):.2f}%.",
+        f"- Primary-period missing-primary-source counts total {assessment['primary_summary']['missing_source_count']:,} ({100 * assessment['primary_summary']['missing_source_rate_usable_denominator']:.2f}% of P0). Annual rates range from {100 * assessment['annual_missing_source_rate_min']:.2f}% to {100 * assessment['annual_missing_source_rate_max']:.2f}% of usable records.",
+        f"- 2026 has {assessment['annual'][2026]['n_raw']:,} raw and {assessment['annual'][2026]['n_usable']:,} usable records in Q1–Q3 only; no Q4 is included. The frozen window ends 2026-09-30. Q1/Q2/Q3 usable counts are {recent_quarter_summary}.",
+        "",
+        "### Flags, unknowns, and sensitivity assumptions",
+        "",
+        "These are observed count and metadata-composition differences only. They do not demonstrate semantic drift, identify a causal mechanism, or establish ingestion incompleteness. The 2026 recent/censored window is not treated as a complete annual cohort, and no annual 2026 extrapolation is made.",
+        "January-1 dates are potential date-precision flags, not evidence of bad or imputed dates. A missing primary_source_id means source attribution is unavailable in the stored record; it does not establish that a work has no venue. Unflagged version histories remain unresolved/unknown.",
+        "S1 and S2 are sensitivity assumptions that remove only their named diagnostic flags. Their differences from P0 quantify sensitivity to those assumptions, not a corrected or preferred corpus. Short abstracts remain included.",
+        "",
         "## Cohort membership",
         "",
         f"- P0: {sums['p0']:,} usable records from 2021–2025.",
@@ -389,7 +615,7 @@ def build_report(qc_rows: list[dict], cohort_counts: dict) -> str:
         "",
         "## Minimal modelling view",
         "",
-        "`scripts/load_stage1b_modelling.py` exposes a lazy, batch-based view of the processed yearly Parquets. Its returned batches contain only `openalex_id`, `title`, `abstract`, and `publication_date`; the ID is traceability-only, title/abstract are semantic inputs, and publication_date is for temporal organization. The loader permits only 2021–2025 primary cohorts. Do not pass other metadata to semantic encoders or future modelling components.",
+        f"`scripts/load_stage1b_modelling.py` exposes a lazy, batch-based view of the processed yearly Parquets and is pinned to the `{OUTPUT_VERSION}` cohort manifest. Its returned batches contain only `openalex_id`, `title`, `abstract`, and `publication_date`; the ID is traceability-only, title/abstract are semantic inputs, and publication_date is for temporal organization. The loader permits only 2021–2025 primary cohorts. Do not pass other metadata to semantic encoders or future modelling components.",
         "",
         "## Source integrity",
         "",
@@ -397,29 +623,31 @@ def build_report(qc_rows: list[dict], cohort_counts: dict) -> str:
         "",
         "## Output files",
         "",
-        "- `data/stage1b/stage1b_quarterly_qc.csv`",
-        "- `data/stage1b/stage1b_modelling_cohorts.parquet`",
-        "- `data/stage1b/stage1b_modelling_manifest.json`",
-        "- `data/stage1b/ESPEF_Stage1B_Audit.md`",
+        f"- `data/stage1b/{OUTPUT_VERSION}/stage1b_quarterly_qc.csv`",
+        f"- `data/stage1b/{OUTPUT_VERSION}/stage1b_modelling_cohorts.parquet`",
+        f"- `data/stage1b/{OUTPUT_VERSION}/stage1b_modelling_manifest.json`",
+        f"- `data/stage1b/{OUTPUT_VERSION}/ESPEF_Stage1B_Audit.md`",
         "",
     ]
     return "\n".join(lines)
 
 
 def run() -> None:
-    output_dir = ROOT / "data" / "stage1b"
+    output_dir = ROOT / "data" / "stage1b" / OUTPUT_VERSION
     output_dir.mkdir(parents=True, exist_ok=True)
     names = [
         "stage1b_quarterly_qc.csv",
         "stage1b_modelling_cohorts.parquet",
         "stage1b_modelling_manifest.json",
         "ESPEF_Stage1B_Audit.md",
+        "stage1b_reproducibility_inventory.json",
     ]
     existing = [name for name in names if (output_dir / name).exists()]
     if existing:
         raise RuntimeError(f"refusing to overwrite Stage 1B output(s): {', '.join(existing)}")
 
     frozen = json.loads((ROOT / "data" / "espef_dataset_manifest.json").read_text())
+    release_evidence = verify_release_integrity(frozen)
     before = source_integrity(frozen)
     raw_counts: collections.Counter = collections.Counter()
     usable_counts: collections.Counter = collections.Counter()
@@ -453,6 +681,7 @@ def run() -> None:
         if before != after:
             raise RuntimeError("one or more source Parquets changed during the audit")
 
+        assessment = temporal_assessment(qc_rows, stats_by_quarter)
         cohort_totals = {
             "P0": sum(row["n_usable"] for row in qc_rows if row["year"] in PRIMARY_YEARS),
             "S1": sum(row["n_usable"] - row["january_1_flag_count"] for row in qc_rows if row["year"] in PRIMARY_YEARS),
@@ -461,17 +690,26 @@ def run() -> None:
             "recent_censored_2026_q1_q3": sum(row["n_usable"] for row in qc_rows if row["year"] == 2026),
         }
         report_temp = temporary_dir / names[3]
-        report_temp.write_text(build_report(qc_rows, cohort_totals), encoding="utf-8")
+        report_temp.write_text(build_report(qc_rows, cohort_totals, assessment), encoding="utf-8")
+        runner_path = pathlib.Path(__file__).resolve()
+        runner_hash = sha256_file(runner_path)
+        relative_output = lambda name: str((output_dir / name).relative_to(ROOT))
         outputs = {
-            "quarterly_qc": {"path": "data/stage1b/stage1b_quarterly_qc.csv", "sha256": sha256_file(qc_temp)},
-            "cohort_membership": {"path": "data/stage1b/stage1b_modelling_cohorts.parquet", "sha256": sha256_file(cohort_temp)},
-            "audit_report": {"path": "data/stage1b/ESPEF_Stage1B_Audit.md", "sha256": sha256_file(report_temp)},
+            "quarterly_qc": {"path": relative_output(names[0]), "sha256": sha256_file(qc_temp)},
+            "cohort_membership": {"path": relative_output(names[1]), "sha256": sha256_file(cohort_temp)},
+            "audit_report": {"path": relative_output(names[3]), "sha256": sha256_file(report_temp)},
         }
         output_manifest = {
             "project": "ESPEF",
             "audit": "Stage 1B Modelling-Cohort and Temporal-Confound Audit",
-            "release_tag": "espef-yearly-2026-10-02",
-            "release_metadata_hash_check": "passed for frozen manifest, SHA256SUMS, and all 12 dataset assets before download",
+            "output_version": OUTPUT_VERSION,
+            "release_tag": RELEASE_TAG,
+            "release_integrity_evidence": release_evidence,
+            "audit_code": {
+                "version": f"stage1b-{OUTPUT_VERSION}",
+                "path": str(runner_path.relative_to(ROOT)),
+                "sha256": runner_hash,
+            },
             "source_hashes_before_audit": before,
             "source_hashes_after_audit": after,
             "source_files_unchanged": before == after,
@@ -480,6 +718,7 @@ def run() -> None:
                 "recent_censored": "2026-01-01 through 2026-09-30; pending_stage_1B; excluded from primary cohorts",
             },
             "cohorts": cohort_totals,
+            "quantitative_assessment": assessment,
             "flags": {
                 FLAG_JAN1: "publication_date ends in -01-01; potential precision flag, not proof of erroneous or imputed date",
                 FLAG_SHORT: "fewer than 20 whitespace-separated abstract tokens; review only; no exclusion",
@@ -494,6 +733,7 @@ def run() -> None:
             },
             "modelling_view": {
                 "loader": "scripts/load_stage1b_modelling.py",
+                "cohort_membership_manifest": relative_output(names[1]),
                 "columns": MODEL_COLUMNS,
                 "traceability_only": ["openalex_id"],
                 "semantic_inputs": ["title", "abstract"],
@@ -506,9 +746,54 @@ def run() -> None:
         }
         manifest_temp = temporary_dir / names[2]
         manifest_temp.write_text(json.dumps(output_manifest, indent=2) + "\n", encoding="utf-8")
+        inventory = {
+            "inventory": "ESPEF Stage 1B derived-output reproducibility inventory",
+            "output_version": OUTPUT_VERSION,
+            "release_integrity_evidence": release_evidence,
+            "source_integrity_manifest": {
+                "path": relative_output(names[2]),
+                "sha256": sha256_file(manifest_temp),
+                "source_files_unchanged": before == after,
+            },
+            "frozen_dataset_manifest": {
+                "path": "data/espef_dataset_manifest.json",
+                "sha256": sha256_file(ROOT / "data" / "espef_dataset_manifest.json"),
+            },
+            "files": [
+                {"path": relative_output(names[0]), "sha256": sha256_file(qc_temp), "size_bytes": qc_temp.stat().st_size},
+                {"path": relative_output(names[1]), "sha256": sha256_file(cohort_temp), "size_bytes": cohort_temp.stat().st_size},
+                {"path": relative_output(names[2]), "sha256": sha256_file(manifest_temp), "size_bytes": manifest_temp.stat().st_size},
+                {"path": relative_output(names[3]), "sha256": sha256_file(report_temp), "size_bytes": report_temp.stat().st_size},
+                {"path": str(runner_path.relative_to(ROOT)), "sha256": runner_hash, "size_bytes": runner_path.stat().st_size},
+                {
+                    "path": "scripts/load_stage1b_modelling.py",
+                    "sha256": sha256_file(ROOT / "scripts" / "load_stage1b_modelling.py"),
+                    "size_bytes": (ROOT / "scripts" / "load_stage1b_modelling.py").stat().st_size,
+                },
+                {
+                    "path": "tests/test_stage1b_audit.py",
+                    "sha256": sha256_file(ROOT / "tests" / "test_stage1b_audit.py"),
+                    "size_bytes": (ROOT / "tests" / "test_stage1b_audit.py").stat().st_size,
+                },
+            ],
+            "self_hash": "omitted to avoid a self-referential checksum",
+        }
+        inventory_temp = temporary_dir / names[4]
+        inventory_temp.write_text(json.dumps(inventory, indent=2) + "\n", encoding="utf-8")
         for name in names:
             os.replace(temporary_dir / name, output_dir / name)
-    print(json.dumps({"cohorts": cohort_totals, "quarters": len(qc_rows), "source_files_unchanged": True}, indent=2))
+    print(
+        json.dumps(
+            {
+                "output_version": OUTPUT_VERSION,
+                "cohorts": cohort_totals,
+                "quarters": len(qc_rows),
+                "release_assets_verified": release_evidence["dataset_assets_checked"],
+                "source_files_unchanged": True,
+            },
+            indent=2,
+        )
+    )
 
 
 if __name__ == "__main__":

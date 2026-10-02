@@ -1,0 +1,625 @@
+{
+  "project": "ESPEF",
+  "audit": "Stage 1B Modelling-Cohort and Temporal-Confound Audit",
+  "output_version": "v2",
+  "release_tag": "espef-yearly-2026-10-02",
+  "release_integrity_evidence": {
+    "release_tag": "espef-yearly-2026-10-02",
+    "checked_at_utc": "2026-10-02T23:39:38.315119+00:00",
+    "metadata_api_url": "https://api.github.com/repos/Bahareh-Daneshvar/ESPEF/releases/tags/espef-yearly-2026-10-02",
+    "manifest_asset": {
+      "name": "espef_dataset_manifest.json",
+      "sha256": "8ead21c5012ddf67b0f7f11365450c1ac019a2c956141cc56da13ebc906e720a",
+      "size_bytes": 7592
+    },
+    "sha256sums_asset": {
+      "name": "SHA256SUMS",
+      "sha256": "aeefca2a95ef15d1fea344548f24b682dfe3324ad60a994ad0aed82d8031cb6f",
+      "size_bytes": 3807
+    },
+    "dataset_assets_checked": 12,
+    "dataset_assets": [
+      {
+        "name": "openalex_espef_2021.parquet",
+        "sha256": "09b069a6912c2a9a534b2ba926a88a235c9c3e460f06408cc4b841a3b0ec8093",
+        "size_bytes": 115990985,
+        "manifest_match": true,
+        "sha256sums_match": true,
+        "release_metadata_match": true
+      },
+      {
+        "name": "espef_corpus_2021.parquet",
+        "sha256": "90d8fefc610b65869fa1ce11e787bed1334c480cbd7b7db13112b773578945d7",
+        "size_bytes": 51337148,
+        "manifest_match": true,
+        "sha256sums_match": true,
+        "release_metadata_match": true
+      },
+      {
+        "name": "openalex_espef_2022.parquet",
+        "sha256": "9e096db240d1ec1b6e96c537aa32bd92053d718f7f0f8107685c589ca1c102fb",
+        "size_bytes": 120560088,
+        "manifest_match": true,
+        "sha256sums_match": true,
+        "release_metadata_match": true
+      },
+      {
+        "name": "espef_corpus_2022.parquet",
+        "sha256": "7253e4cdb99ddcacfa67fee6100bf6eba98a68878703269b5f5e12ec6df88633",
+        "size_bytes": 54875951,
+        "manifest_match": true,
+        "sha256sums_match": true,
+        "release_metadata_match": true
+      },
+      {
+        "name": "openalex_espef_2023.parquet",
+        "sha256": "e1f11a244717319a037ef1c36815bd0cb727c26e097d0b1ee1717915551fec42",
+        "size_bytes": 144173131,
+        "manifest_match": true,
+        "sha256sums_match": true,
+        "release_metadata_match": true
+      },
+      {
+        "name": "espef_corpus_2023.parquet",
+        "sha256": "960e6e731faeb3483450fcfb2401f6da4b0e8f9a074970fbef3ee86beb3815a4",
+        "size_bytes": 66511527,
+        "manifest_match": true,
+        "sha256sums_match": true,
+        "release_metadata_match": true
+      },
+      {
+        "name": "openalex_espef_2024.parquet",
+        "sha256": "253c0dae495660d82b40d5984efafd57fb39365071997212f2ac1323e4aca15e",
+        "size_bytes": 168777263,
+        "manifest_match": true,
+        "sha256sums_match": true,
+        "release_metadata_match": true
+      },
+      {
+        "name": "espef_corpus_2024.parquet",
+        "sha256": "d771c3526008baa32c53ebd2eef7e63eff32ea29be7c9e78f910e50730ddfc4b",
+        "size_bytes": 79171293,
+        "manifest_match": true,
+        "sha256sums_match": true,
+        "release_metadata_match": true
+      },
+      {
+        "name": "openalex_espef_2025.parquet",
+        "sha256": "5e8df879490ef7f2fa1917247d05084d521e10e5589bc9f0044f3791e9c4867a",
+        "size_bytes": 157750328,
+        "manifest_match": true,
+        "sha256sums_match": true,
+        "release_metadata_match": true
+      },
+      {
+        "name": "espef_corpus_2025.parquet",
+        "sha256": "bb7264d067a11a0aded2796979c6968d5d3e2c1126ba2b40cebe835b2309a157",
+        "size_bytes": 73429380,
+        "manifest_match": true,
+        "sha256sums_match": true,
+        "release_metadata_match": true
+      },
+      {
+        "name": "openalex_espef_2026.parquet",
+        "sha256": "40b5a584a6f6805864de68eb190a07af35e42d93b8573ee875b2f55d6a751347",
+        "size_bytes": 87007157,
+        "manifest_match": true,
+        "sha256sums_match": true,
+        "release_metadata_match": true
+      },
+      {
+        "name": "espef_corpus_2026.parquet",
+        "sha256": "4f138a7082a06f45afda4dabcef6285895f0070c92eedbaa659f3ff0a9706cb2",
+        "size_bytes": 38523416,
+        "manifest_match": true,
+        "sha256sums_match": true,
+        "release_metadata_match": true
+      }
+    ]
+  },
+  "audit_code": {
+    "version": "stage1b-v2",
+    "path": "scripts/stage1b_audit.py",
+    "sha256": "aacff1cda20ca59ded85e306291baec0973c7a138b83ffdfc1d3170f299504a9"
+  },
+  "source_hashes_before_audit": {
+    "data/raw/openalex_espef_2021.parquet": {
+      "size_bytes": 115990985,
+      "rows": 136446,
+      "sha256": "09b069a6912c2a9a534b2ba926a88a235c9c3e460f06408cc4b841a3b0ec8093"
+    },
+    "data/processed/espef_corpus_2021.parquet": {
+      "size_bytes": 51337148,
+      "rows": 106415,
+      "sha256": "90d8fefc610b65869fa1ce11e787bed1334c480cbd7b7db13112b773578945d7"
+    },
+    "data/raw/openalex_espef_2022.parquet": {
+      "size_bytes": 120560088,
+      "rows": 136491,
+      "sha256": "9e096db240d1ec1b6e96c537aa32bd92053d718f7f0f8107685c589ca1c102fb"
+    },
+    "data/processed/espef_corpus_2022.parquet": {
+      "size_bytes": 54875951,
+      "rows": 110212,
+      "sha256": "7253e4cdb99ddcacfa67fee6100bf6eba98a68878703269b5f5e12ec6df88633"
+    },
+    "data/raw/openalex_espef_2023.parquet": {
+      "size_bytes": 144173131,
+      "rows": 162966,
+      "sha256": "e1f11a244717319a037ef1c36815bd0cb727c26e097d0b1ee1717915551fec42"
+    },
+    "data/processed/espef_corpus_2023.parquet": {
+      "size_bytes": 66511527,
+      "rows": 131821,
+      "sha256": "960e6e731faeb3483450fcfb2401f6da4b0e8f9a074970fbef3ee86beb3815a4"
+    },
+    "data/raw/openalex_espef_2024.parquet": {
+      "size_bytes": 168777263,
+      "rows": 186964,
+      "sha256": "253c0dae495660d82b40d5984efafd57fb39365071997212f2ac1323e4aca15e"
+    },
+    "data/processed/espef_corpus_2024.parquet": {
+      "size_bytes": 79171293,
+      "rows": 150191,
+      "sha256": "d771c3526008baa32c53ebd2eef7e63eff32ea29be7c9e78f910e50730ddfc4b"
+    },
+    "data/raw/openalex_espef_2025.parquet": {
+      "size_bytes": 157750328,
+      "rows": 175549,
+      "sha256": "5e8df879490ef7f2fa1917247d05084d521e10e5589bc9f0044f3791e9c4867a"
+    },
+    "data/processed/espef_corpus_2025.parquet": {
+      "size_bytes": 73429380,
+      "rows": 133117,
+      "sha256": "bb7264d067a11a0aded2796979c6968d5d3e2c1126ba2b40cebe835b2309a157"
+    },
+    "data/raw/openalex_espef_2026.parquet": {
+      "size_bytes": 87007157,
+      "rows": 111148,
+      "sha256": "40b5a584a6f6805864de68eb190a07af35e42d93b8573ee875b2f55d6a751347"
+    },
+    "data/processed/espef_corpus_2026.parquet": {
+      "size_bytes": 38523416,
+      "rows": 70057,
+      "sha256": "4f138a7082a06f45afda4dabcef6285895f0070c92eedbaa659f3ff0a9706cb2"
+    }
+  },
+  "source_hashes_after_audit": {
+    "data/raw/openalex_espef_2021.parquet": {
+      "size_bytes": 115990985,
+      "rows": 136446,
+      "sha256": "09b069a6912c2a9a534b2ba926a88a235c9c3e460f06408cc4b841a3b0ec8093"
+    },
+    "data/processed/espef_corpus_2021.parquet": {
+      "size_bytes": 51337148,
+      "rows": 106415,
+      "sha256": "90d8fefc610b65869fa1ce11e787bed1334c480cbd7b7db13112b773578945d7"
+    },
+    "data/raw/openalex_espef_2022.parquet": {
+      "size_bytes": 120560088,
+      "rows": 136491,
+      "sha256": "9e096db240d1ec1b6e96c537aa32bd92053d718f7f0f8107685c589ca1c102fb"
+    },
+    "data/processed/espef_corpus_2022.parquet": {
+      "size_bytes": 54875951,
+      "rows": 110212,
+      "sha256": "7253e4cdb99ddcacfa67fee6100bf6eba98a68878703269b5f5e12ec6df88633"
+    },
+    "data/raw/openalex_espef_2023.parquet": {
+      "size_bytes": 144173131,
+      "rows": 162966,
+      "sha256": "e1f11a244717319a037ef1c36815bd0cb727c26e097d0b1ee1717915551fec42"
+    },
+    "data/processed/espef_corpus_2023.parquet": {
+      "size_bytes": 66511527,
+      "rows": 131821,
+      "sha256": "960e6e731faeb3483450fcfb2401f6da4b0e8f9a074970fbef3ee86beb3815a4"
+    },
+    "data/raw/openalex_espef_2024.parquet": {
+      "size_bytes": 168777263,
+      "rows": 186964,
+      "sha256": "253c0dae495660d82b40d5984efafd57fb39365071997212f2ac1323e4aca15e"
+    },
+    "data/processed/espef_corpus_2024.parquet": {
+      "size_bytes": 79171293,
+      "rows": 150191,
+      "sha256": "d771c3526008baa32c53ebd2eef7e63eff32ea29be7c9e78f910e50730ddfc4b"
+    },
+    "data/raw/openalex_espef_2025.parquet": {
+      "size_bytes": 157750328,
+      "rows": 175549,
+      "sha256": "5e8df879490ef7f2fa1917247d05084d521e10e5589bc9f0044f3791e9c4867a"
+    },
+    "data/processed/espef_corpus_2025.parquet": {
+      "size_bytes": 73429380,
+      "rows": 133117,
+      "sha256": "bb7264d067a11a0aded2796979c6968d5d3e2c1126ba2b40cebe835b2309a157"
+    },
+    "data/raw/openalex_espef_2026.parquet": {
+      "size_bytes": 87007157,
+      "rows": 111148,
+      "sha256": "40b5a584a6f6805864de68eb190a07af35e42d93b8573ee875b2f55d6a751347"
+    },
+    "data/processed/espef_corpus_2026.parquet": {
+      "size_bytes": 38523416,
+      "rows": 70057,
+      "sha256": "4f138a7082a06f45afda4dabcef6285895f0070c92eedbaa659f3ff0a9706cb2"
+    }
+  },
+  "source_files_unchanged": true,
+  "periods": {
+    "primary_candidate": "2021-01-01 through 2025-12-31",
+    "recent_censored": "2026-01-01 through 2026-09-30; pending_stage_1B; excluded from primary cohorts"
+  },
+  "cohorts": {
+    "P0": 631756,
+    "S1": 550265,
+    "S2": 628228,
+    "S3-known": 32740,
+    "recent_censored_2026_q1_q3": 70057
+  },
+  "quantitative_assessment": {
+    "primary_quarter_size": {
+      "raw_min": {
+        "quarter": "2025Q4",
+        "count": 26131
+      },
+      "raw_max": {
+        "quarter": "2025Q1",
+        "count": 68976
+      },
+      "raw_max_min_ratio": 2.6396,
+      "usable_min": {
+        "quarter": "2025Q4",
+        "count": 18703
+      },
+      "usable_max": {
+        "quarter": "2025Q1",
+        "count": 46076
+      },
+      "usable_max_min_ratio": 2.4636
+    },
+    "primary_summary": {
+      "n_usable": 631756,
+      "january_1_count": 81491,
+      "january_1_rate_usable_denominator": 0.12899126,
+      "january_1_count_in_q1": 81491,
+      "missing_source_count": 155441,
+      "missing_source_rate_usable_denominator": 0.24604594
+    },
+    "source_distribution_2021_vs_2025": {
+      "metric": "total_variation_distance_over_known_primary_source_ids",
+      "value": 0.41206715,
+      "2021_source_hhi": 0.07809426,
+      "2025_source_hhi": 0.06320783
+    },
+    "work_type_change_2021_to_2025_percentage_points": {
+      "article": 10.22,
+      "conference-paper": -10.79,
+      "preprint": 0.57
+    },
+    "annual": {
+      "2021": {
+        "n_raw": 136446,
+        "n_usable": 106415,
+        "january_1_count": 15848,
+        "january_1_rate_usable_denominator": 0.14892637,
+        "january_1_count_in_q1": 15848,
+        "missing_source_count": 25246,
+        "missing_source_rate_usable_denominator": 0.23724099,
+        "work_types": {
+          "article": {
+            "count": 44874,
+            "proportion_usable_denominator": 0.42168867
+          },
+          "conference-paper": {
+            "count": 36437,
+            "proportion_usable_denominator": 0.34240474
+          },
+          "preprint": {
+            "count": 25104,
+            "proportion_usable_denominator": 0.23590659
+          }
+        },
+        "known_source_denominator": 81169,
+        "source_hhi_known_source_denominator": 0.07809426,
+        "leading_sources": [
+          {
+            "source_id": "https://openalex.org/S4306400194",
+            "source_name": "arXiv (Cornell University)",
+            "count": 22445,
+            "share_known_source_denominator": 0.27652182
+          },
+          {
+            "source_id": "https://openalex.org/S4210187594",
+            "source_name": "Journal of Physics Conference Series",
+            "count": 1619,
+            "share_known_source_denominator": 0.01994604
+          },
+          {
+            "source_id": "https://openalex.org/S2485537415",
+            "source_name": "IEEE Access",
+            "count": 1256,
+            "share_known_source_denominator": 0.01547389
+          }
+        ]
+      },
+      "2022": {
+        "n_raw": 136491,
+        "n_usable": 110212,
+        "january_1_count": 14053,
+        "january_1_rate_usable_denominator": 0.1275088,
+        "january_1_count_in_q1": 14053,
+        "missing_source_count": 17394,
+        "missing_source_rate_usable_denominator": 0.1578231,
+        "work_types": {
+          "article": {
+            "count": 48050,
+            "proportion_usable_denominator": 0.43597793
+          },
+          "conference-paper": {
+            "count": 35492,
+            "proportion_usable_denominator": 0.3220339
+          },
+          "preprint": {
+            "count": 26670,
+            "proportion_usable_denominator": 0.24198817
+          }
+        },
+        "known_source_denominator": 92818,
+        "source_hhi_known_source_denominator": 0.065821,
+        "leading_sources": [
+          {
+            "source_id": "https://openalex.org/S4306400194",
+            "source_name": "arXiv (Cornell University)",
+            "count": 23521,
+            "share_known_source_denominator": 0.2534099
+          },
+          {
+            "source_id": "https://openalex.org/S4306400562",
+            "source_name": "Zenodo (CERN European Organization for Nuclear Research)",
+            "count": 2158,
+            "share_known_source_denominator": 0.0232498
+          },
+          {
+            "source_id": "https://openalex.org/S2485537415",
+            "source_name": "IEEE Access",
+            "count": 1002,
+            "share_known_source_denominator": 0.01079532
+          }
+        ]
+      },
+      "2023": {
+        "n_raw": 162966,
+        "n_usable": 131821,
+        "january_1_count": 16824,
+        "january_1_rate_usable_denominator": 0.12762762,
+        "january_1_count_in_q1": 16824,
+        "missing_source_count": 40057,
+        "missing_source_rate_usable_denominator": 0.30387419,
+        "work_types": {
+          "article": {
+            "count": 54427,
+            "proportion_usable_denominator": 0.41288566
+          },
+          "conference-paper": {
+            "count": 42919,
+            "proportion_usable_denominator": 0.32558545
+          },
+          "preprint": {
+            "count": 34475,
+            "proportion_usable_denominator": 0.26152889
+          }
+        },
+        "known_source_denominator": 91764,
+        "source_hhi_known_source_denominator": 0.10903097,
+        "leading_sources": [
+          {
+            "source_id": "https://openalex.org/S4306400194",
+            "source_name": "arXiv (Cornell University)",
+            "count": 30092,
+            "share_known_source_denominator": 0.32792816
+          },
+          {
+            "source_id": "https://openalex.org/S4306400562",
+            "source_name": "Zenodo (CERN European Organization for Nuclear Research)",
+            "count": 1919,
+            "share_known_source_denominator": 0.02091234
+          },
+          {
+            "source_id": "https://openalex.org/S2485537415",
+            "source_name": "IEEE Access",
+            "count": 1281,
+            "share_known_source_denominator": 0.01395972
+          }
+        ]
+      },
+      "2024": {
+        "n_raw": 186964,
+        "n_usable": 150191,
+        "january_1_count": 17416,
+        "january_1_rate_usable_denominator": 0.11595901,
+        "january_1_count_in_q1": 17416,
+        "missing_source_count": 43721,
+        "missing_source_rate_usable_denominator": 0.29110266,
+        "work_types": {
+          "article": {
+            "count": 64489,
+            "proportion_usable_denominator": 0.42937992
+          },
+          "conference-paper": {
+            "count": 46229,
+            "proportion_usable_denominator": 0.3078014
+          },
+          "preprint": {
+            "count": 39473,
+            "proportion_usable_denominator": 0.26281868
+          }
+        },
+        "known_source_denominator": 106470,
+        "source_hhi_known_source_denominator": 0.10679683,
+        "leading_sources": [
+          {
+            "source_id": "https://openalex.org/S4306400194",
+            "source_name": "arXiv (Cornell University)",
+            "count": 34640,
+            "share_known_source_denominator": 0.32534986
+          },
+          {
+            "source_id": "https://openalex.org/S2485537415",
+            "source_name": "IEEE Access",
+            "count": 1633,
+            "share_known_source_denominator": 0.01533765
+          },
+          {
+            "source_id": "https://openalex.org/S4210191458",
+            "source_name": "Proceedings of the AAAI Conference on Artificial Intelligence",
+            "count": 1082,
+            "share_known_source_denominator": 0.01016249
+          }
+        ]
+      },
+      "2025": {
+        "n_raw": 175549,
+        "n_usable": 133117,
+        "january_1_count": 17350,
+        "january_1_rate_usable_denominator": 0.13033647,
+        "january_1_count_in_q1": 17350,
+        "missing_source_count": 29023,
+        "missing_source_rate_usable_denominator": 0.21802625,
+        "work_types": {
+          "article": {
+            "count": 69736,
+            "proportion_usable_denominator": 0.52386998
+          },
+          "conference-paper": {
+            "count": 31222,
+            "proportion_usable_denominator": 0.23454555
+          },
+          "preprint": {
+            "count": 32159,
+            "proportion_usable_denominator": 0.24158447
+          }
+        },
+        "known_source_denominator": 104094,
+        "source_hhi_known_source_denominator": 0.06320783,
+        "leading_sources": [
+          {
+            "source_id": "https://openalex.org/S4306400194",
+            "source_name": "arXiv (Cornell University)",
+            "count": 25770,
+            "share_known_source_denominator": 0.2475647
+          },
+          {
+            "source_id": "https://openalex.org/S4306400562",
+            "source_name": "Zenodo (CERN European Organization for Nuclear Research)",
+            "count": 2827,
+            "share_known_source_denominator": 0.02715815
+          },
+          {
+            "source_id": "https://openalex.org/S2485537415",
+            "source_name": "IEEE Access",
+            "count": 1487,
+            "share_known_source_denominator": 0.01428517
+          }
+        ]
+      },
+      "2026": {
+        "n_raw": 111148,
+        "n_usable": 70057,
+        "january_1_count": 8881,
+        "january_1_rate_usable_denominator": 0.1267682,
+        "january_1_count_in_q1": 8881,
+        "missing_source_count": 2439,
+        "missing_source_rate_usable_denominator": 0.03481451,
+        "work_types": {
+          "article": {
+            "count": 47495,
+            "proportion_usable_denominator": 0.67794796
+          },
+          "conference-paper": {
+            "count": 5178,
+            "proportion_usable_denominator": 0.07391124
+          },
+          "preprint": {
+            "count": 17384,
+            "proportion_usable_denominator": 0.2481408
+          }
+        },
+        "known_source_denominator": 67618,
+        "source_hhi_known_source_denominator": 0.1293968,
+        "leading_sources": [
+          {
+            "source_id": "https://openalex.org/S4306400562",
+            "source_name": "Zenodo (CERN European Organization for Nuclear Research)",
+            "count": 24145,
+            "share_known_source_denominator": 0.35707948
+          },
+          {
+            "source_id": "https://openalex.org/S196734849",
+            "source_name": "Scientific Reports",
+            "count": 1351,
+            "share_known_source_denominator": 0.01997989
+          },
+          {
+            "source_id": "https://openalex.org/S4210191458",
+            "source_name": "Proceedings of the AAAI Conference on Artificial Intelligence",
+            "count": 1266,
+            "share_known_source_denominator": 0.01872283
+          }
+        ]
+      }
+    },
+    "annual_missing_source_rate_min": 0.1578231,
+    "annual_missing_source_rate_max": 0.30387419
+  },
+  "flags": {
+    "january_1_date_precision_unverified": "publication_date ends in -01-01; potential precision flag, not proof of erroneous or imputed date",
+    "short_abstract_review": "fewer than 20 whitespace-separated abstract tokens; review only; no exclusion",
+    "suspected_text_language_mismatch_review": "at least 20 alphabetic title+abstract characters and ASCII-letter proportion below 0.5; heuristic, not validated language classifier",
+    "preprint_published_date_review": "at least one raw stored location contains arxiv case-insensitively and raw primary_location.is_published is true",
+    "unflagged_version_history": "unresolved/unknown; never interpreted as no preprint"
+  },
+  "denominators": {
+    "n_raw": "raw Parquet records grouped by unchanged publication_date; cross-checked with validated yearly audit and available quarterly CSV",
+    "n_usable": "processed Parquet records; diagnostic rates and work-type proportions use this denominator",
+    "known_source_shares_and_hhi": "records with nonempty primary_source_id; missing source count/rate separately uses n_usable"
+  },
+  "modelling_view": {
+    "loader": "scripts/load_stage1b_modelling.py",
+    "cohort_membership_manifest": "data/stage1b/v2/stage1b_modelling_cohorts.parquet",
+    "columns": [
+      "openalex_id",
+      "title",
+      "abstract",
+      "publication_date"
+    ],
+    "traceability_only": [
+      "openalex_id"
+    ],
+    "semantic_inputs": [
+      "title",
+      "abstract"
+    ],
+    "temporal_organization": [
+      "publication_date"
+    ],
+    "metadata_prohibited_as_semantic_input": true
+  },
+  "outputs": {
+    "quarterly_qc": {
+      "path": "data/stage1b/v2/stage1b_quarterly_qc.csv",
+      "sha256": "0d16ba3ad7dcd1aae85a51e9aa288f7596b920449068108e50b38c8bfe7049e5"
+    },
+    "cohort_membership": {
+      "path": "data/stage1b/v2/stage1b_modelling_cohorts.parquet",
+      "sha256": "7f84a74348d5e3cc09f6f2be732ce026e62b611563d947ac7556c6e8470dbbee"
+    },
+    "audit_report": {
+      "path": "data/stage1b/v2/ESPEF_Stage1B_Audit.md",
+      "sha256": "3cb41c1068fd7ac61e798a3e792ec120517cb24fdf35b706b06a623228b4e6f0"
+    }
+  },
+  "modelling_approved": false,
+  "embeddings_or_clustering_run": false
+}

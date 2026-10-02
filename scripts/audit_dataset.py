@@ -115,7 +115,7 @@ def finalize_year(root,config,year):
         py=int(prior.parent.name)
         if py>=year or not verify_completed(root,config,py):continue
         checkdb.execute('ATTACH DATABASE ? AS prior',(str(prior),))
-        cross.extend({'id':row[0],'prior_year':py} for row in checkdb.execute('SELECT seen.id FROM seen INNER JOIN prior.seen ON seen.id=prior.seen.id'))
+        cross.extend({'id':row[0],'prior_year':py} for row in checkdb.execute('SELECT current_work.id FROM main.seen AS current_work INNER JOIN prior.seen AS prior_work ON current_work.id=prior_work.id'))
         checkdb.execute('DETACH DATABASE prior')
     if cross:raise RuntimeError('Cross-year OpenAlex ID overlap found; dates may have changed during extraction')
     index_temp=dbpath.with_suffix('.sqlite.tmp')

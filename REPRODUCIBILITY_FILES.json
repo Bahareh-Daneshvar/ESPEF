@@ -1,137 +1,38 @@
-[
-  {
-    "path": ".gitignore",
-    "size_bytes": 86,
-    "sha256": "e04bbeebdc0c2adabc7b9402e20af1923da99d88278c05e3bf884f77407d0da7"
-  },
-  {
-    "path": "README.md",
-    "size_bytes": 7087,
-    "sha256": "ee35c276446efdcef8692a145802c4ea72648e6b9bd1f520073aca3e5df8c5ff"
-  },
-  {
-    "path": "config/openalex.json",
-    "size_bytes": 1589,
-    "sha256": "8c304dea6e2625c0b616381a407d05be384e072d5185ad98e19bdcbfb5479f0a"
-  },
-  {
-    "path": "data/README.md",
-    "size_bytes": 937,
-    "sha256": "e1b4620214540f1cdd3a0491c92de495f69dda87e0b6162318a74028f3dec12c"
-  },
-  {
-    "path": "data/audits/espef_audit_2021.json",
-    "size_bytes": 21452,
-    "sha256": "2ec786faa6d9c1e07aff0117f6ca3f514217dbfa7d632c145b92aed31748c4c7"
-  },
-  {
-    "path": "data/audits/espef_audit_2021_full.json.gz",
-    "size_bytes": 628527,
-    "sha256": "c8f7dcf911dd1e323fd1fece7135df407afe85b671ac04689f057ebb44aaae93"
-  },
-  {
-    "path": "data/audits/espef_exclusions_2021.json.gz",
-    "size_bytes": 183765,
-    "sha256": "12b0fd29c4065e7702e54fba293d0a197c8a7f083d4f8dcba1f13ea04c2c4077"
-  },
-  {
-    "path": "data/audits/espef_quarterly_2021.csv",
-    "size_bytes": 118,
-    "sha256": "069d0c2f3287bfaf9562e050c94e81b957b1a313a538297e4297a85f489a8747"
-  },
-  {
-    "path": "data/espef_dataset_manifest.json",
-    "size_bytes": 5209,
-    "sha256": "ba4f31c2ea3748f0a97aa2d5833dd08ed31003a0741b74b7ac1fe3c131e29015"
-  },
-  {
-    "path": "data/sample_espef_corpus.csv",
-    "size_bytes": 159570,
-    "sha256": "aec05149aefb9384437b7cbc4bd74cfde51e8a6d7341627a0395c7d793b6c459"
-  },
-  {
-    "path": "data/stage1/ESPEF_OpenAlex_Stage1_Audit.md",
-    "size_bytes": 18829,
-    "sha256": "e37c6fa21f3434f45a6a7c249701bb896ec0e6078a1d19e5a073774e36416abd"
-  },
-  {
-    "path": "data/stage1/arxiv_year_check.csv",
-    "size_bytes": 122,
-    "sha256": "abcb8f3710e1070edbeeb934567e1ce61017d77e682baf5465a946b5768dd00e"
-  },
-  {
-    "path": "data/stage1/espef_stage1_primary_location_source_id.csv",
-    "size_bytes": 16073,
-    "sha256": "9ad73703cc597f27f47b7eed643056cc6a464d3cc99ce34aaeb95870171a1ee2"
-  },
-  {
-    "path": "data/stage1/espef_stage1_primary_topic_id.csv",
-    "size_bytes": 5518,
-    "sha256": "3a2f1e38f602de4b07d434d22554ed38b04686f2735f48bc9de67cc030031c00"
-  },
-  {
-    "path": "data/stage1/espef_stage1_publication_year.csv",
-    "size_bytes": 123,
-    "sha256": "616744aea056ae8d275d8d423cdf9c2c389f8f2806c6f56f65619ca842e96f9d"
-  },
-  {
-    "path": "data/stage1/espef_stage1_quarterly_audit.csv",
-    "size_bytes": 2401,
-    "sha256": "0ede767b4dfd11859af556be6892bb51636ecdadf65615e3495ddf194d33e52d"
-  },
-  {
-    "path": "data/stage1/espef_stage1_type.csv",
-    "size_bytes": 189,
-    "sha256": "a663d1af57ed027ecec261bc3efbc75f5d2f313d1234e82df530624a25cc830a"
-  },
-  {
-    "path": "data/stage1/language_diagnostic.csv",
-    "size_bytes": 6486,
-    "sha256": "b7dad429413cb54ae9ea6590a764edaf389ce28d17e7a65d06fc3cbd8edf7fda"
-  },
-  {
-    "path": "data/stage1/zenodo_year_check.csv",
-    "size_bytes": 116,
-    "sha256": "31eafe978497a9b86bbcada29f8134ce53808827e517b27d774a78a1fd189749"
-  },
-  {
-    "path": "queries/openalex_query.txt",
-    "size_bytes": 1141,
-    "sha256": "7d9e6d71a4ce292e30e32f800289e2a8fdc3989bab99f24308b0ccaf765fc29d"
-  },
-  {
-    "path": "requirements.txt",
-    "size_bytes": 33,
-    "sha256": "edccf551ea7cc712fafc968d70ee746b7f0014204414acd264b885f4a294719c"
-  },
-  {
-    "path": "scripts/audit_dataset.py",
-    "size_bytes": 15280,
-    "sha256": "a5ccd33bb8996f8d4cab170b68a62b74c8cc8ffd93d9de0dcfca649c58f8ee64"
-  },
-  {
-    "path": "scripts/download_openalex.py",
-    "size_bytes": 8685,
-    "sha256": "b041eada683c4dbf6fed4b90e5e26d6ac77f6dabb2fe19d1d6060f47477d0406"
-  },
-  {
-    "path": "scripts/load_temporal_partition.py",
-    "size_bytes": 1143,
-    "sha256": "3a48dca5e575f32af66434cf984f3a570c83279fec0416d825c7758bd44f461f"
-  },
-  {
-    "path": "scripts/reconstruct_abstracts.py",
-    "size_bytes": 1351,
-    "sha256": "7d1b60687db420fce5a5eb7c11ed56fda4bda5c67b16ba77b66bc07b3caefddb"
-  },
-  {
-    "path": "scripts/validate_dataset.py",
-    "size_bytes": 490,
-    "sha256": "90750ff1a22a17f37f0ed7ec63cc56f99ec26297d4a0a0de33bd66e3a36fdd7b"
-  },
-  {
-    "path": "tests/test_yearly_pipeline.py",
-    "size_bytes": 4665,
-    "sha256": "cdaaa4af387196394ef0f71294f92294c041724a6d88409f8f8317bbc3be8ba5"
+{
+  "files": {
+    ".gitignore": "e04bbeebdc0c2adabc7b9402e20af1923da99d88278c05e3bf884f77407d0da7",
+    "README.md": "52d43c5788480c3105629dedbf84142700d2a655a9642449d1f4d15a42378779",
+    "config/openalex.json": "8c304dea6e2625c0b616381a407d05be384e072d5185ad98e19bdcbfb5479f0a",
+    "data/README.md": "e1b4620214540f1cdd3a0491c92de495f69dda87e0b6162318a74028f3dec12c",
+    "data/audits/espef_audit_2021.json": "2ec786faa6d9c1e07aff0117f6ca3f514217dbfa7d632c145b92aed31748c4c7",
+    "data/audits/espef_audit_2021_full.json.gz": "c8f7dcf911dd1e323fd1fece7135df407afe85b671ac04689f057ebb44aaae93",
+    "data/audits/espef_audit_2022.json": "287c9707bbd6d2866ea85dd61b76ce653095f603fea19d95b0cffca9372f05ee",
+    "data/audits/espef_exclusions_2021.json.gz": "12b0fd29c4065e7702e54fba293d0a197c8a7f083d4f8dcba1f13ea04c2c4077",
+    "data/audits/espef_quarterly_2021.csv": "069d0c2f3287bfaf9562e050c94e81b957b1a313a538297e4297a85f489a8747",
+    "data/audits/espef_quarterly_2022.csv": "dbe516d3e7f7a2b7c13ee3b860135dac89cffd08bef47c189172e17715bbbf69",
+    "data/espef_dataset_manifest.json": "0695cf730a89c8a13dcb1a2d1df855d32db754ac2c5ba60c83522305affb616c",
+    "data/sample_espef_corpus.csv": "aec05149aefb9384437b7cbc4bd74cfde51e8a6d7341627a0395c7d793b6c459",
+    "data/stage1/ESPEF_OpenAlex_Stage1_Audit.md": "e37c6fa21f3434f45a6a7c249701bb896ec0e6078a1d19e5a073774e36416abd",
+    "data/stage1/arxiv_year_check.csv": "abcb8f3710e1070edbeeb934567e1ce61017d77e682baf5465a946b5768dd00e",
+    "data/stage1/espef_stage1_primary_location_source_id.csv": "9ad73703cc597f27f47b7eed643056cc6a464d3cc99ce34aaeb95870171a1ee2",
+    "data/stage1/espef_stage1_primary_topic_id.csv": "3a2f1e38f602de4b07d434d22554ed38b04686f2735f48bc9de67cc030031c00",
+    "data/stage1/espef_stage1_publication_year.csv": "616744aea056ae8d275d8d423cdf9c2c389f8f2806c6f56f65619ca842e96f9d",
+    "data/stage1/espef_stage1_quarterly_audit.csv": "0ede767b4dfd11859af556be6892bb51636ecdadf65615e3495ddf194d33e52d",
+    "data/stage1/espef_stage1_type.csv": "a663d1af57ed027ecec261bc3efbc75f5d2f313d1234e82df530624a25cc830a",
+    "data/stage1/language_diagnostic.csv": "b7dad429413cb54ae9ea6590a764edaf389ce28d17e7a65d06fc3cbd8edf7fda",
+    "data/stage1/zenodo_year_check.csv": "31eafe978497a9b86bbcada29f8134ce53808827e517b27d774a78a1fd189749",
+    "queries/openalex_query.txt": "7d9e6d71a4ce292e30e32f800289e2a8fdc3989bab99f24308b0ccaf765fc29d",
+    "requirements.txt": "edccf551ea7cc712fafc968d70ee746b7f0014204414acd264b885f4a294719c",
+    "scripts/__pycache__/audit_dataset.cpython-312.pyc": "cbe8b76ad64b3b5aab3bc2a2f41e5c423ad5213bf532b26a62aaa4a959550e99",
+    "scripts/__pycache__/download_openalex.cpython-312.pyc": "8f9435ede8f8cc8f055a91423da436f99043ee558f0cd6ba10b4090d5f60021c",
+    "scripts/__pycache__/load_temporal_partition.cpython-312.pyc": "80d74ae537468c422d6164fa7c08ba1db8756f01cb4f68d6d1990dd8424ec872",
+    "scripts/__pycache__/reconstruct_abstracts.cpython-312.pyc": "ed695a72b4ce7816637beb4ae1efc97dc12bb409314c239dc5208ce7ed6221d0",
+    "scripts/audit_dataset.py": "4d00e15389787ba0439f4cb16c11dce52b4faad4a8e00262c8cfb7d0ff8bd675",
+    "scripts/download_openalex.py": "b041eada683c4dbf6fed4b90e5e26d6ac77f6dabb2fe19d1d6060f47477d0406",
+    "scripts/load_temporal_partition.py": "3a48dca5e575f32af66434cf984f3a570c83279fec0416d825c7758bd44f461f",
+    "scripts/reconstruct_abstracts.py": "7d1b60687db420fce5a5eb7c11ed56fda4bda5c67b16ba77b66bc07b3caefddb",
+    "scripts/validate_dataset.py": "90750ff1a22a17f37f0ed7ec63cc56f99ec26297d4a0a0de33bd66e3a36fdd7b",
+    "tests/__pycache__/test_yearly_pipeline.cpython-312.pyc": "26ae3b919d937d246c69c3dd7ef99b610236108542bd292e97e591977462c614",
+    "tests/test_yearly_pipeline.py": "9bbae703b4fbb44e4121c75eb3eede593fb18ffebb0dac2c64f8820b6c422569"
   }
-]
+}

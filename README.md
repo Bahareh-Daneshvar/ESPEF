@@ -4,7 +4,7 @@ Storage partitions do not change scientific scope or temporal resolution. Dates 
 
 ## Current extraction status
 
-2021: 136,446 retrieved Works; 106,415 pass the documented quality rules. Extracted on 1 October 2026 UTC. 2022: 62,600 checkpointed records, incomplete. 2023–2026: not started. OpenAlex returned HTTP 429 and extraction is paused. No modelling has begun. These counts describe rule-based validation, not human certification of language, dates or research content.
+2021: 136,446 retrieved Works; 106,415 pass the documented quality rules. 2022: complete and validated on 2 October 2026 UTC, with 136,491 retrieved and 110,212 usable Works. 2023: 125,600 of 162,966 matching records checkpointed, incomplete. 2024–2026: not started. OpenAlex returned HTTP 429 and extraction is paused. No modelling has begun. These counts describe rule-based validation, not human certification of language, dates or research content.
 
 `data/espef_dataset_manifest.json` records these statuses and full-data checksums. `data/audits/espef_audit_2021.json` is a compact summary; the complete source distributions and duplicate groups are preserved in `espef_audit_2021_full.json.gz`. The CSV sample contains 25 processed records per 2021 quarter selected in stored order, for format/QC demonstration only; it is not a representative scientific sample or a reduced modelling corpus.
 
@@ -76,7 +76,7 @@ The loader selects only required yearly files and pushes the exact date range in
 python -m unittest discover -s tests -v
 ```
 
-Tests exercise index collisions/gaps, raw/processed count reconciliation, checksum corruption, crash recovery from an orphaned cached page, and the unresolved-2026 loader gate.
+Tests exercise cross-year ID overlap rejection, index collisions/gaps, raw/processed count reconciliation, checksum corruption, crash recovery from an orphaned cached page, and the unresolved-2026 loader gate.
 
 ## GitHub and storage
 

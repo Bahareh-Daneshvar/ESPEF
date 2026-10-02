@@ -11,18 +11,18 @@ class PipelineTests(unittest.TestCase):
         self.tmp=tempfile.TemporaryDirectory();self.root=pathlib.Path(self.tmp.name)
         self.config=json.loads((PROJECT/'config/openalex.json').read_text())
     def tearDown(self):self.tmp.cleanup()
-    def fixtures(self):
+    def fixtures(self,year=2021):
         for q in range(1,5):
-            start=f'2021-{3*q-2:02d}-01';end=f'2021-{3*q:02d}-28'
+            start=f'{year}-{3*q-2:02d}-01';end=f'{year}-{3*q:02d}-28'
             params={'filter':downloader.filter_for(self.config,start,end),'corpus':'core','per_page':200,'select':','.join(self.config['fields']),'sort':'publication_date:asc'}
             fp=hashlib.sha256(json.dumps(params,sort_keys=True).encode()).hexdigest()
-            valid={'id':f'W{q}','doi':f'doi:{q}','title':'A valid scientific title '+str(q),'abstract_inverted_index':{'Research':[0],'findings':[1]},'publication_date':start,'publication_year':2021,'type':'article','language':'en','primary_topic':{'id':'T1','display_name':'Topic','subfield':{'id':'https://openalex.org/subfields/1702'}},'primary_location':{'source':{'id':'S1','display_name':'Venue'}},'locations':[]}
+            valid={'id':f'W{q}','doi':f'doi:{q}','title':'A valid scientific title '+str(q),'abstract_inverted_index':{'Research':[0],'findings':[1]},'publication_date':start,'publication_year':year,'type':'article','language':'en','primary_topic':{'id':'T1','display_name':'Topic','subfield':{'id':'https://openalex.org/subfields/1702'}},'primary_location':{'source':{'id':'S1','display_name':'Venue'}},'locations':[]}
             invalid=copy.deepcopy(valid);invalid['id']=f'WX{q}';invalid['doi']=None
             if q==1:invalid['abstract_inverted_index']=None
             if q==2:invalid['abstract_inverted_index']={'International':[0],'audience':[1]}
             if q==3:invalid['abstract_inverted_index']={'35.240.67':[0]}
             if q==4:invalid['id']='W1'
-            folder=self.root/f'data/checkpoints/2021/Q{q}';folder.mkdir(parents=True)
+            folder=self.root/f'data/checkpoints/{year}/Q{q}';folder.mkdir(parents=True)
             page={'input_cursor':'*','query_fingerprint':fp,'retrieved_at':'2026-10-02T00:00:00Z','response':{'meta':{'count':2,'next_cursor':None},'results':[valid,invalid]}}
             with gzip.open(folder/'page_000000.json.gz','wt') as f:json.dump(page,f)
             state={'query_fingerprint':fp,'params':params,'cursor':None,'pages':1,'retrieved':2,'complete':True,'initial_count':2,'started_at':'2026-10-02T00:00:00Z'}
@@ -40,6 +40,12 @@ class PipelineTests(unittest.TestCase):
         m=json.loads((self.root/'data/espef_dataset_manifest.json').read_text());self.assertEqual(m['years']['2022']['status'],'not_started')
         p=self.root/a['files']['processed']['path'];p.write_bytes(p.read_bytes()+b'corruption')
         with self.assertRaises(RuntimeError):verify_completed(self.root,self.config,2021)
+    def test_cross_year_id_overlap_blocks_finalization(self):
+        self.fixtures();finalize_year(self.root,self.config,2021)
+        self.fixtures(2022)
+        with self.assertRaisesRegex(RuntimeError,'Cross-year OpenAlex ID overlap'):
+            finalize_year(self.root,self.config,2022)
+
     def test_audit_only_clone_can_download_fresh(self):
         self.fixtures();a=finalize_year(self.root,self.config,2021)
         for item in a['files'].values():(self.root/item['path']).unlink()

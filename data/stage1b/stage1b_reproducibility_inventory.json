@@ -1,0 +1,92 @@
+{
+  "inventory": "ESPEF Stage 1B reproducibility inventory",
+  "created_on": "2026-10-02",
+  "release": {
+    "tag": "espef-yearly-2026-10-02",
+    "url": "https://github.com/Bahareh-Daneshvar/ESPEF/releases/tag/espef-yearly-2026-10-02",
+    "frozen_manifest_asset": {
+      "name": "espef_dataset_manifest.json",
+      "sha256": "8ead21c5012ddf67b0f7f11365450c1ac019a2c956141cc56da13ebc906e720a"
+    },
+    "sha256sums_asset": {
+      "name": "SHA256SUMS",
+      "sha256": "aeefca2a95ef15d1fea344548f24b682dfe3324ad60a994ad0aed82d8031cb6f"
+    },
+    "dataset_hashes_and_sizes_verified_against_release_metadata": true
+  },
+  "workspace_frozen_manifest": {
+    "path": "data/espef_dataset_manifest.json",
+    "sha256": "8ead21c5012ddf67b0f7f11365450c1ac019a2c956141cc56da13ebc906e720a",
+    "unchanged_from_head": true
+  },
+  "source_dataset_integrity": {
+    "recorded_in": "data/stage1b/stage1b_modelling_manifest.json",
+    "record_sha256": "42a0765643dead0300ad710b3a1df337a82de166d77c47b7a7a976916c9007bf",
+    "source_parquet_count": 12,
+    "all_source_hashes_and_sizes_match_before_and_after_audit": true
+  },
+  "files": [
+    {
+      "path": "data/stage1b/stage1b_quarterly_qc.csv",
+      "size_bytes": 15934,
+      "sha256": "0d16ba3ad7dcd1aae85a51e9aa288f7596b920449068108e50b38c8bfe7049e5",
+      "role": "23-quarter raw/usable and confound QC"
+    },
+    {
+      "path": "data/stage1b/stage1b_modelling_cohorts.parquet",
+      "size_bytes": 4714556,
+      "sha256": "7f84a74348d5e3cc09f6f2be732ce026e62b611563d947ac7556c6e8470dbbee",
+      "role": "compact, unique-ID cohort membership and diagnostic states"
+    },
+    {
+      "path": "data/stage1b/stage1b_modelling_manifest.json",
+      "size_bytes": 7373,
+      "sha256": "42a0765643dead0300ad710b3a1df337a82de166d77c47b7a7a976916c9007bf",
+      "role": "cohort definitions, source hashes before/after, and modelling-view specification"
+    },
+    {
+      "path": "data/stage1b/ESPEF_Stage1B_Audit.md",
+      "size_bytes": 4564,
+      "sha256": "d634bab3857730d62313c6277bf1e74125bc6157ecd36e98d5a63f2b4e635c38",
+      "role": "human-readable Stage 1B audit report"
+    },
+    {
+      "path": "scripts/stage1b_audit.py",
+      "size_bytes": 27854,
+      "sha256": "9e48b24f18cf4c2fcd17136da088b157e4425e1b78674249ef0fc8c3834c5d97",
+      "role": "streaming audit runner with source-integrity and count gates"
+    },
+    {
+      "path": "scripts/load_stage1b_modelling.py",
+      "size_bytes": 2261,
+      "sha256": "d1a18e25bfbe8ef45615ee9f73ea19a3b8d70953a00099c1da0c16e4aeef99de",
+      "role": "lazy primary-cohort loader projecting only four approved columns"
+    },
+    {
+      "path": "tests/test_stage1b_audit.py",
+      "size_bytes": 3002,
+      "sha256": "ab9aeaa4b36547c67c229597793debd34a9ed9b8ab5b57173e2cf77bf2afa9b2",
+      "role": "Stage 1B date, heuristic, denominator, and loader validation tests"
+    }
+  ],
+  "validation": {
+    "command": "python -m unittest discover -s tests",
+    "result": "10 tests passed",
+    "source_hashes_rechecked_before_publication": true,
+    "cohort_ids_unique": true,
+    "modelling_projection": [
+      "openalex_id",
+      "title",
+      "abstract",
+      "publication_date"
+    ],
+    "modelling_run_started": false
+  },
+  "preexisting_root_inventory": {
+    "path": "REPRODUCIBILITY_FILES.json",
+    "sha256": "b269437461b0ded020c93734a8fe2acc1bf3e4f30fb9170d140a03ce22c75c13",
+    "modified": false,
+    "note": "Its recorded hash for data/espef_dataset_manifest.json is 0695cf730a89c8a13dcb1a2d1df855d32db754ac2c5ba60c83522305affb616c; the committed manifest is 8ead21c5012ddf67b0f7f11365450c1ac019a2c956141cc56da13ebc906e720a and matches the current release asset. The preexisting inventory was left untouched."
+  },
+  "self_hash": "omitted to avoid a self-referential checksum"
+}

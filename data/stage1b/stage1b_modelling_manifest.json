@@ -1,0 +1,190 @@
+{
+  "project": "ESPEF",
+  "audit": "Stage 1B Modelling-Cohort and Temporal-Confound Audit",
+  "release_tag": "espef-yearly-2026-10-02",
+  "release_metadata_hash_check": "passed for frozen manifest, SHA256SUMS, and all 12 dataset assets before download",
+  "source_hashes_before_audit": {
+    "data/raw/openalex_espef_2021.parquet": {
+      "size_bytes": 115990985,
+      "rows": 136446,
+      "sha256": "09b069a6912c2a9a534b2ba926a88a235c9c3e460f06408cc4b841a3b0ec8093"
+    },
+    "data/processed/espef_corpus_2021.parquet": {
+      "size_bytes": 51337148,
+      "rows": 106415,
+      "sha256": "90d8fefc610b65869fa1ce11e787bed1334c480cbd7b7db13112b773578945d7"
+    },
+    "data/raw/openalex_espef_2022.parquet": {
+      "size_bytes": 120560088,
+      "rows": 136491,
+      "sha256": "9e096db240d1ec1b6e96c537aa32bd92053d718f7f0f8107685c589ca1c102fb"
+    },
+    "data/processed/espef_corpus_2022.parquet": {
+      "size_bytes": 54875951,
+      "rows": 110212,
+      "sha256": "7253e4cdb99ddcacfa67fee6100bf6eba98a68878703269b5f5e12ec6df88633"
+    },
+    "data/raw/openalex_espef_2023.parquet": {
+      "size_bytes": 144173131,
+      "rows": 162966,
+      "sha256": "e1f11a244717319a037ef1c36815bd0cb727c26e097d0b1ee1717915551fec42"
+    },
+    "data/processed/espef_corpus_2023.parquet": {
+      "size_bytes": 66511527,
+      "rows": 131821,
+      "sha256": "960e6e731faeb3483450fcfb2401f6da4b0e8f9a074970fbef3ee86beb3815a4"
+    },
+    "data/raw/openalex_espef_2024.parquet": {
+      "size_bytes": 168777263,
+      "rows": 186964,
+      "sha256": "253c0dae495660d82b40d5984efafd57fb39365071997212f2ac1323e4aca15e"
+    },
+    "data/processed/espef_corpus_2024.parquet": {
+      "size_bytes": 79171293,
+      "rows": 150191,
+      "sha256": "d771c3526008baa32c53ebd2eef7e63eff32ea29be7c9e78f910e50730ddfc4b"
+    },
+    "data/raw/openalex_espef_2025.parquet": {
+      "size_bytes": 157750328,
+      "rows": 175549,
+      "sha256": "5e8df879490ef7f2fa1917247d05084d521e10e5589bc9f0044f3791e9c4867a"
+    },
+    "data/processed/espef_corpus_2025.parquet": {
+      "size_bytes": 73429380,
+      "rows": 133117,
+      "sha256": "bb7264d067a11a0aded2796979c6968d5d3e2c1126ba2b40cebe835b2309a157"
+    },
+    "data/raw/openalex_espef_2026.parquet": {
+      "size_bytes": 87007157,
+      "rows": 111148,
+      "sha256": "40b5a584a6f6805864de68eb190a07af35e42d93b8573ee875b2f55d6a751347"
+    },
+    "data/processed/espef_corpus_2026.parquet": {
+      "size_bytes": 38523416,
+      "rows": 70057,
+      "sha256": "4f138a7082a06f45afda4dabcef6285895f0070c92eedbaa659f3ff0a9706cb2"
+    }
+  },
+  "source_hashes_after_audit": {
+    "data/raw/openalex_espef_2021.parquet": {
+      "size_bytes": 115990985,
+      "rows": 136446,
+      "sha256": "09b069a6912c2a9a534b2ba926a88a235c9c3e460f06408cc4b841a3b0ec8093"
+    },
+    "data/processed/espef_corpus_2021.parquet": {
+      "size_bytes": 51337148,
+      "rows": 106415,
+      "sha256": "90d8fefc610b65869fa1ce11e787bed1334c480cbd7b7db13112b773578945d7"
+    },
+    "data/raw/openalex_espef_2022.parquet": {
+      "size_bytes": 120560088,
+      "rows": 136491,
+      "sha256": "9e096db240d1ec1b6e96c537aa32bd92053d718f7f0f8107685c589ca1c102fb"
+    },
+    "data/processed/espef_corpus_2022.parquet": {
+      "size_bytes": 54875951,
+      "rows": 110212,
+      "sha256": "7253e4cdb99ddcacfa67fee6100bf6eba98a68878703269b5f5e12ec6df88633"
+    },
+    "data/raw/openalex_espef_2023.parquet": {
+      "size_bytes": 144173131,
+      "rows": 162966,
+      "sha256": "e1f11a244717319a037ef1c36815bd0cb727c26e097d0b1ee1717915551fec42"
+    },
+    "data/processed/espef_corpus_2023.parquet": {
+      "size_bytes": 66511527,
+      "rows": 131821,
+      "sha256": "960e6e731faeb3483450fcfb2401f6da4b0e8f9a074970fbef3ee86beb3815a4"
+    },
+    "data/raw/openalex_espef_2024.parquet": {
+      "size_bytes": 168777263,
+      "rows": 186964,
+      "sha256": "253c0dae495660d82b40d5984efafd57fb39365071997212f2ac1323e4aca15e"
+    },
+    "data/processed/espef_corpus_2024.parquet": {
+      "size_bytes": 79171293,
+      "rows": 150191,
+      "sha256": "d771c3526008baa32c53ebd2eef7e63eff32ea29be7c9e78f910e50730ddfc4b"
+    },
+    "data/raw/openalex_espef_2025.parquet": {
+      "size_bytes": 157750328,
+      "rows": 175549,
+      "sha256": "5e8df879490ef7f2fa1917247d05084d521e10e5589bc9f0044f3791e9c4867a"
+    },
+    "data/processed/espef_corpus_2025.parquet": {
+      "size_bytes": 73429380,
+      "rows": 133117,
+      "sha256": "bb7264d067a11a0aded2796979c6968d5d3e2c1126ba2b40cebe835b2309a157"
+    },
+    "data/raw/openalex_espef_2026.parquet": {
+      "size_bytes": 87007157,
+      "rows": 111148,
+      "sha256": "40b5a584a6f6805864de68eb190a07af35e42d93b8573ee875b2f55d6a751347"
+    },
+    "data/processed/espef_corpus_2026.parquet": {
+      "size_bytes": 38523416,
+      "rows": 70057,
+      "sha256": "4f138a7082a06f45afda4dabcef6285895f0070c92eedbaa659f3ff0a9706cb2"
+    }
+  },
+  "source_files_unchanged": true,
+  "periods": {
+    "primary_candidate": "2021-01-01 through 2025-12-31",
+    "recent_censored": "2026-01-01 through 2026-09-30; pending_stage_1B; excluded from primary cohorts"
+  },
+  "cohorts": {
+    "P0": 631756,
+    "S1": 550265,
+    "S2": 628228,
+    "S3-known": 32740,
+    "recent_censored_2026_q1_q3": 70057
+  },
+  "flags": {
+    "january_1_date_precision_unverified": "publication_date ends in -01-01; potential precision flag, not proof of erroneous or imputed date",
+    "short_abstract_review": "fewer than 20 whitespace-separated abstract tokens; review only; no exclusion",
+    "suspected_text_language_mismatch_review": "at least 20 alphabetic title+abstract characters and ASCII-letter proportion below 0.5; heuristic, not validated language classifier",
+    "preprint_published_date_review": "at least one raw stored location contains arxiv case-insensitively and raw primary_location.is_published is true",
+    "unflagged_version_history": "unresolved/unknown; never interpreted as no preprint"
+  },
+  "denominators": {
+    "n_raw": "raw Parquet records grouped by unchanged publication_date; cross-checked with validated yearly audit and available quarterly CSV",
+    "n_usable": "processed Parquet records; diagnostic rates and work-type proportions use this denominator",
+    "known_source_shares_and_hhi": "records with nonempty primary_source_id; missing source count/rate separately uses n_usable"
+  },
+  "modelling_view": {
+    "loader": "scripts/load_stage1b_modelling.py",
+    "columns": [
+      "openalex_id",
+      "title",
+      "abstract",
+      "publication_date"
+    ],
+    "traceability_only": [
+      "openalex_id"
+    ],
+    "semantic_inputs": [
+      "title",
+      "abstract"
+    ],
+    "temporal_organization": [
+      "publication_date"
+    ],
+    "metadata_prohibited_as_semantic_input": true
+  },
+  "outputs": {
+    "quarterly_qc": {
+      "path": "data/stage1b/stage1b_quarterly_qc.csv",
+      "sha256": "0d16ba3ad7dcd1aae85a51e9aa288f7596b920449068108e50b38c8bfe7049e5"
+    },
+    "cohort_membership": {
+      "path": "data/stage1b/stage1b_modelling_cohorts.parquet",
+      "sha256": "7f84a74348d5e3cc09f6f2be732ce026e62b611563d947ac7556c6e8470dbbee"
+    },
+    "audit_report": {
+      "path": "data/stage1b/ESPEF_Stage1B_Audit.md",
+      "sha256": "d634bab3857730d62313c6277bf1e74125bc6157ecd36e98d5a63f2b4e635c38"
+    }
+  },
+  "modelling_approved": false,
+  "embeddings_or_clustering_run": false
+}

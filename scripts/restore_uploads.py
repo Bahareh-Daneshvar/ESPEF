@@ -37,6 +37,10 @@ def main():
                 rel = Path(item.filename)
                 if rel.parts and rel.parts[0] == "ESPEF":
                     rel = Path(*rel.parts[1:])
+                if rel == Path("config/openalex.json"):
+                    if json.loads(archive.read(item)) != json.loads((ROOT / rel).read_text()):
+                        raise RuntimeError("Archived configuration differs from current configuration")
+                    continue
                 if rel.is_absolute() or ".." in rel.parts or rel.parts[:2] != ("data", "checkpoints"):
                     raise RuntimeError(f"Unexpected archive entry in {name}")
     for source, target in plan:
@@ -51,6 +55,8 @@ def main():
                 rel = Path(item.filename)
                 if rel.parts[0] == "ESPEF":
                     rel = Path(*rel.parts[1:])
+                if rel == Path("config/openalex.json"):
+                    continue
                 target = ROOT / rel
                 target.parent.mkdir(parents=True, exist_ok=True)
                 if target.exists():

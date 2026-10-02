@@ -91,90 +91,121 @@
       "audit_representation": "compact Git summary; complete audit delivered separately"
     },
     "2023": {
-      "status": "checkpointed_incomplete",
+      "status": "validated",
       "date_range": [
         "2023-01-01",
         "2023-12-31"
       ],
       "initial_matching_count": 162966,
-      "retrieved": 125600,
-      "checkpoints": [
-        {
-          "quarter": "Q1",
-          "initial_matching_count": 55544,
-          "retrieved": 35400,
-          "pages": 177,
-          "complete": false,
-          "path": "data/checkpoints/2023/Q1/state.json"
+      "retrieved": 162966,
+      "usable": 131821,
+      "files": {
+        "raw": {
+          "path": "data/raw/openalex_espef_2023.parquet",
+          "size_bytes": 144173131,
+          "sha256": "e1f11a244717319a037ef1c36815bd0cb727c26e097d0b1ee1717915551fec42",
+          "rows": 162966
         },
-        {
-          "quarter": "Q2",
-          "initial_matching_count": 34606,
-          "retrieved": 29600,
-          "pages": 148,
-          "complete": false,
-          "path": "data/checkpoints/2023/Q2/state.json"
-        },
-        {
-          "quarter": "Q3",
-          "initial_matching_count": 32541,
-          "retrieved": 30200,
-          "pages": 151,
-          "complete": false,
-          "path": "data/checkpoints/2023/Q3/state.json"
-        },
-        {
-          "quarter": "Q4",
-          "initial_matching_count": 40275,
-          "retrieved": 30400,
-          "pages": 152,
-          "complete": false,
-          "path": "data/checkpoints/2023/Q4/state.json"
+        "processed": {
+          "path": "data/processed/espef_corpus_2023.parquet",
+          "size_bytes": 66511527,
+          "sha256": "960e6e731faeb3483450fcfb2401f6da4b0e8f9a074970fbef3ee86beb3815a4",
+          "rows": 131821
         }
-      ],
-      "coverage_status": "not_audited",
+      },
+      "audit_path": "data/audits/espef_audit_2023.json",
+      "audit_sha256": "9f405d62d0aa7054a5c98d31315195fb62c1d2c915dde442115258eb292d20d1",
+      "coverage_status": "coverage_and_date_QC_flags_require_review",
       "modelling_approved": false
     },
     "2024": {
-      "status": "not_started",
+      "status": "validated",
       "date_range": [
         "2024-01-01",
         "2024-12-31"
       ],
-      "initial_matching_count": null,
-      "retrieved": 0,
-      "checkpoints": [],
-      "coverage_status": "not_audited",
+      "initial_matching_count": 186964,
+      "retrieved": 186964,
+      "usable": 150191,
+      "files": {
+        "raw": {
+          "path": "data/raw/openalex_espef_2024.parquet",
+          "size_bytes": 168777263,
+          "sha256": "253c0dae495660d82b40d5984efafd57fb39365071997212f2ac1323e4aca15e",
+          "rows": 186964
+        },
+        "processed": {
+          "path": "data/processed/espef_corpus_2024.parquet",
+          "size_bytes": 79171293,
+          "sha256": "d771c3526008baa32c53ebd2eef7e63eff32ea29be7c9e78f910e50730ddfc4b",
+          "rows": 150191
+        }
+      },
+      "audit_path": "data/audits/espef_audit_2024.json",
+      "audit_sha256": "609d3c1874488ccf0ae1d795031ad7285fa95d3b051e5b3cc76929ac0709ae7f",
+      "coverage_status": "coverage_and_date_QC_flags_require_review",
       "modelling_approved": false
     },
     "2025": {
-      "status": "not_started",
+      "status": "validated",
       "date_range": [
         "2025-01-01",
         "2025-12-31"
       ],
-      "initial_matching_count": null,
-      "retrieved": 0,
-      "checkpoints": [],
-      "coverage_status": "not_audited",
+      "initial_matching_count": 175549,
+      "retrieved": 175549,
+      "usable": 133117,
+      "files": {
+        "raw": {
+          "path": "data/raw/openalex_espef_2025.parquet",
+          "size_bytes": 157750328,
+          "sha256": "5e8df879490ef7f2fa1917247d05084d521e10e5589bc9f0044f3791e9c4867a",
+          "rows": 175549
+        },
+        "processed": {
+          "path": "data/processed/espef_corpus_2025.parquet",
+          "size_bytes": 73429380,
+          "sha256": "bb7264d067a11a0aded2796979c6968d5d3e2c1126ba2b40cebe835b2309a157",
+          "rows": 133117
+        }
+      },
+      "audit_path": "data/audits/espef_audit_2025.json",
+      "audit_sha256": "f62081d14eacb14a5bc9e048e1bada2327f89d53457c31aa470dc5c75922b1bf",
+      "coverage_status": "coverage_and_date_QC_flags_require_review",
       "modelling_approved": false
     },
     "2026": {
-      "status": "not_started",
+      "status": "validated",
       "date_range": [
         "2026-01-01",
         "2026-09-30"
       ],
-      "initial_matching_count": null,
-      "retrieved": 0,
-      "checkpoints": [],
+      "initial_matching_count": 111148,
+      "retrieved": 111148,
+      "usable": 70057,
+      "files": {
+        "raw": {
+          "path": "data/raw/openalex_espef_2026.parquet",
+          "size_bytes": 87007157,
+          "sha256": "40b5a584a6f6805864de68eb190a07af35e42d93b8573ee875b2f55d6a751347",
+          "rows": 111148
+        },
+        "processed": {
+          "path": "data/processed/espef_corpus_2026.parquet",
+          "size_bytes": 38523416,
+          "sha256": "4f138a7082a06f45afda4dabcef6285895f0070c92eedbaa659f3ff0a9706cb2",
+          "rows": 70057
+        }
+      },
+      "audit_path": "data/audits/espef_audit_2026.json",
+      "audit_sha256": "2f345ad2b935cd069713d5ad0bf19ef5ee3c90deae1bf6fa100026d1b1612866",
       "coverage_status": "pending_stage_1B",
       "modelling_approved": false
     }
   },
-  "updated_at": "2026-10-02T00:28:47.453702+00:00",
-  "blocked_reason": "OpenAlex rate or daily usage limit (HTTP 429); checkpoint retained",
-  "all_years_validated": false,
+  "updated_at": "2026-10-02T13:14:44.518394+00:00",
+  "blocked_reason": null,
+  "all_years_validated": true,
   "modelling_approved": false,
   "completeness_2026": "pending_stage_1B",
   "credentials": "environment only; never embedded"

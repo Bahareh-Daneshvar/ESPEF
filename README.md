@@ -141,7 +141,7 @@ for batch in scan_window('2023-04-01', '2023-06-30',
 
 The loader selects only required yearly files and pushes the exact date range into a streaming Parquet scanner. It does not combine yearly files or load the corpus into RAM. Quarterly, semi-annual and annual windows use the unchanged publication dates.
 
-2026 remains `pending_stage_1B`. The default loader refuses windows touching 2026; `allow_unresolved_2026=True` is an explicit audit-only override. Successful extraction of 2026 is not evidence that its indexing is complete. All years remain unapproved for modelling until the final data audit is reviewed.
+2026 remains `pending_stage_1B`. The default loader refuses windows touching 2026; `allow_unresolved_2026=True` is an explicit audit-only override. Successful extraction of 2026 is not evidence that its indexing is complete.
 
 ## Verification
 
